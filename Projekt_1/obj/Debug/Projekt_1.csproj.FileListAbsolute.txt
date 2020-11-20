@@ -60,3 +60,5 @@ C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Projekt_1.csproj.CoreCompileInpu
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Projekt_1.csproj.CopyComplete
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Projekt_1.exe
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Projekt_1.pdb
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\Login.g.cs
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\Login.baml

@@ -1,7 +1,4 @@
-﻿using Projekt_1.DAL;
-using Projekt_1.NHibernate;
-using Projekt_1.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Projekt_1
+namespace Projekt_1.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Login : Page
     {
-        public MainWindow()
+        public Login()
         {
             InitializeComponent();
-            Login login = new Login();
-            MainFrame.NavigationService.Navigate(login);
         }
-
     }
 }

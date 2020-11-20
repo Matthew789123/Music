@@ -6,7 +6,5 @@
         xmlns:local="clr-namespace:Projekt_1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Click="Button_Click">xd</Button>
-    </Grid>
+    <Frame Content="" NavigationUIVisibility="Hidden" Name="MainFrame" />
 </Window>

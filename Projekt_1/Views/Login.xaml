@@ -1,0 +1,21 @@
+﻿<Page x:Class="Projekt_1.Views.Login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Projekt_1.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      FontSize="20"
+      Title="Login">
+
+    <StackPanel Height="auto" Width="450" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBox Margin="10" Padding="10" >Email or username</TextBox>
+        <TextBox Margin="10,0,10,10" Padding="10">Password</TextBox>
+        <Button Margin="10,0,10,10" Padding="10">Log in</Button>
+        <TextBlock HorizontalAlignment="Center">
+            Don't have an account? 
+            <Hyperlink NavigateUri="Reviews.xaml">Register now! </Hyperlink>
+        </TextBlock>
+    </StackPanel>
+</Page>
