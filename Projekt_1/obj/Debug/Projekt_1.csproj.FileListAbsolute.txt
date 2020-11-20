@@ -97,3 +97,5 @@ C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\Projekt_1.csproj.
 C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\Projekt_1.csproj.CopyComplete
 C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\Projekt_1.exe
 C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\Projekt_1.pdb
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\Registration.g.cs
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\Registration.baml
