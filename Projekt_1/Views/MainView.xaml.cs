@@ -24,5 +24,27 @@ namespace Projekt_1.Views
         {
             InitializeComponent();
         }
+
+
+        private void onArtistsButtonClick(object sender, RoutedEventArgs e)
+        {
+            ItemsDisplay items = new ItemsDisplay();
+            ActivityFrame.NavigationService.Navigate(items);
+            items.getAllArtists();
+        }
+
+        private void onSongsButtonClick(object sender, RoutedEventArgs e)
+        {
+            ItemsDisplay items = new ItemsDisplay();
+            ActivityFrame.NavigationService.Navigate(items);
+            items.getAllSongs();
+        }
+
+        private void onAlbumsButtonClick(object sender, RoutedEventArgs e)
+        {
+            ItemsDisplay items = new ItemsDisplay();
+            ActivityFrame.NavigationService.Navigate(items);
+            items.getAllAlbums();
+        }
     }
 }

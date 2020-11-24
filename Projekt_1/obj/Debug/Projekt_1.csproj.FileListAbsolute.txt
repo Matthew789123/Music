@@ -101,3 +101,5 @@ C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\Registration.g.cs
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\Registration.baml
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\MainView.g.cs
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\MainView.baml
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\ItemsDisplay.g.cs
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\ItemsDisplay.baml

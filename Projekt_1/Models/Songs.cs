@@ -20,5 +20,32 @@ namespace Projekt_1.Models
         public virtual IList<Comments> comments { get; set; }
         public virtual IList<Genres> genres { get; set; }
         public virtual IList<Ratings> ratings { get; set; }
+
+        public  virtual string genresToString 
+        {
+            get 
+            {
+                string s="";
+                foreach (Genres g in genres)
+                {
+                    s += g.Name+"\n";
+                }
+                return s;
+            } 
+        }
+
+        public virtual string artistsToString
+        {
+            get
+            {
+                string s = "";
+                foreach (Artists g in artists)
+                {
+                    s += g.Name + "\n";
+                }
+                return s;
+            }
+        }
+
     }
 }

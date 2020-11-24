@@ -28,43 +28,57 @@
                 </Grid.RowDefinitions>
                 <StackPanel Margin="5" Grid.Column="0">
                     <Button>Home</Button>
-                    <Button>Artists</Button>
-                    <Button>Albums</Button>
-                    <Button>Songs</Button>
+                    <Button Click="onArtistsButtonClick">Artists</Button>
+                    <Button Click="onAlbumsButtonClick">Albums</Button>
+                    <Button Click="onSongsButtonClick" >Songs</Button>
                     <Label>Your playlists:</Label>
                 </StackPanel>
 
-                <ListBox Grid.Row="1"  BorderThickness="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox Margin="5" Grid.Row="1"  BorderThickness="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListBoxItem>ads</ListBoxItem>
                     <ListBoxItem>ads</ListBoxItem>
                     <ListBoxItem>ads</ListBoxItem>
 
                 </ListBox>
-                <Button Grid.Row="2" VerticalAlignment="Bottom">Add new playlist</Button>
+                <Button Grid.Row="2" VerticalAlignment="Bottom" Margin="5">Add new playlist</Button>
             </Grid>
+
+            <Grid Grid.Column="1" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Padding="5" Margin="0,0,5,0">Searchbar</TextBox>
+                <Button Padding="5" Grid.Column="1">Search</Button>
+                <Frame Margin="0 5 5 0" Content="" NavigationUIVisibility="Hidden" Name="ActivityFrame" Grid.Row="1" Grid.ColumnSpan="2"></Frame>
+            </Grid>
+            
         </Grid>
-        
-        
+      
         
         <!--STEROWANIE PLAYEREM-->
-        <Grid Grid.Row="1" Margin="5">
+        <Grid Grid.Row="1" Margin="5" Background="#44444444">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0">Co grane</TextBox>
+            <Label Grid.Column="0" VerticalAlignment="Center">Co grane</Label>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button >asd</Button>
-                    <Button >asd</Button>
-                    <Button >asd</Button>
-                    <Button >asd</Button>
-                    <Button >asd</Button>
+                    <Button >Shuffle</Button>
+                    <Button >Previous</Button>
+                    <Button >Play/Pause</Button>
+                    <Button >Next</Button>
+                    <Button >Loop</Button>
                 </StackPanel>
                 <Label Grid.Row="1">0.00</Label>
                 <Slider Grid.Row="1" Margin="35 0"></Slider>
