@@ -1,0 +1,88 @@
+﻿<Page x:Class="Projekt_1.Views.MainView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Projekt_1.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="5" Grid.Column="0">
+                    <Button>Home</Button>
+                    <Button>Artists</Button>
+                    <Button>Albums</Button>
+                    <Button>Songs</Button>
+                    <Label>Your playlists:</Label>
+                </StackPanel>
+
+                <ListBox Grid.Row="1"  BorderThickness="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBoxItem>ads</ListBoxItem>
+                    <ListBoxItem>ads</ListBoxItem>
+                    <ListBoxItem>ads</ListBoxItem>
+
+                </ListBox>
+                <Button Grid.Row="2" VerticalAlignment="Bottom">Add new playlist</Button>
+            </Grid>
+        </Grid>
+        
+        
+        
+        <!--STEROWANIE PLAYEREM-->
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0">Co grane</TextBox>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button >asd</Button>
+                    <Button >asd</Button>
+                    <Button >asd</Button>
+                    <Button >asd</Button>
+                    <Button >asd</Button>
+                </StackPanel>
+                <Label Grid.Row="1">0.00</Label>
+                <Slider Grid.Row="1" Margin="35 0"></Slider>
+                <Label Grid.Row="1" HorizontalAlignment="Right">1,11</Label>
+            </Grid>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                <Button Height="auto" Margin="5">place</Button>
+                <Button Height="auto" Margin="5">holder</Button>
+               
+                <Slider VerticalAlignment="Center" Maximum="100" Width="100" ></Slider>
+                
+            </StackPanel>
+              
+        </Grid>
+
+    </Grid>
+    
+    
+    
+    
+</Page>
