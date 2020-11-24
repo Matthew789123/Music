@@ -20,9 +20,17 @@ namespace Projekt_1.Views
     /// </summary>
     public partial class Login : Page
     {
+
+        public string login { get; set; }
+        public string password { get; set; }
+
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void OnLoginClick(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

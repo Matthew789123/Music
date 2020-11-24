@@ -26,9 +26,9 @@ namespace Projekt_1
         public MainWindow()
         {
             InitializeComponent();
-            Login login = new Login();
-            Registration register = new Registration();
-            MainFrame.NavigationService.Navigate(register);
+            MainView view = new MainView();
+            MainFrame.NavigationService.Navigate(view);
+
         }
 
     }

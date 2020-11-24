@@ -10,9 +10,9 @@
       Title="Login">
 
     <StackPanel Height="auto" Width="450" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBox Margin="10" Padding="10" >Email or username</TextBox>
-        <TextBox Margin="10,0,10,10" Padding="10">Password</TextBox>
-        <Button Margin="10,0,10,10" Padding="10">Log in</Button>
+        <TextBox Margin="10" Padding="10" Name="LoginBox">Email or username</TextBox>
+        <TextBox Margin="10,0,10,10" Padding="10" Name="PasswordBox">Password</TextBox>
+        <Button Margin="10,0,10,10" Padding="10" Click="OnLoginClick">Log in</Button>
         <TextBlock HorizontalAlignment="Center">
             Don't have an account? 
             <Hyperlink NavigateUri="Registration.xaml">Register now! </Hyperlink>
