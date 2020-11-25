@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_1.Models
 {
-    class Comments
+    public class Comments
     {
         public virtual int Id { get; set; }
         public virtual string Content { get; set; }

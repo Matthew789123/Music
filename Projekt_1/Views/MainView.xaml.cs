@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Projekt_1.DAL;
+using Projekt_1.Models;
+using Projekt_1.NHibernate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +23,21 @@ namespace Projekt_1.Views
     /// </summary>
     public partial class MainView : Page
     {
+        Database db;
+        
         public MainView()
         {
             InitializeComponent();
+            db = Database.getInstanece();
+        
+
+            using(var session=NHibernateHelper.OpenSession())
+            {
+                foreach(Playlists p in db.GetPlaylists(session))
+                {
+                    PlaylistListBox.Items.Add(p);
+                }
+            }
         }
 
 
@@ -46,5 +61,24 @@ namespace Projekt_1.Views
             ActivityFrame.NavigationService.Navigate(items);
             items.getAllAlbums();
         }
+
+        private void onAddPlaylistButtonClick(object sender, RoutedEventArgs e)
+        {
+            AddPlaylistDialog dlg = new AddPlaylistDialog();
+            dlg.Owner = Application.Current.MainWindow;
+            dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            dlg.Show();
+            dlg.Owner = null;
+        }
+
+        private void playlistSelected(object sender, SelectionChangedEventArgs e)
+        {
+            ItemsDisplay items = new ItemsDisplay();
+            ActivityFrame.NavigationService.Navigate(items);
+            items.getPlaylistSongs((Playlists)PlaylistListBox.SelectedItem);
+
+        }
+
+  
     }
 }

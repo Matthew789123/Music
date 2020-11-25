@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_1.Models
 {
-    class Ratings
+   public class Ratings
     {
         public virtual Users Users_Id { get; set; }
         public virtual Songs Songs_Id { get; set; }
