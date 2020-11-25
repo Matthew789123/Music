@@ -9,10 +9,17 @@
       FontSize="20"
       Title="Login">
 
-    <StackPanel Height="auto" Width="450" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBox Margin="10" Padding="10" Name="LoginBox">Email or username</TextBox>
-        <TextBox Margin="10,0,10,10" Padding="10" Name="PasswordBox">Password</TextBox>
-        <Button Margin="10,0,10,10" Padding="10" Click="OnLoginClick">Log in</Button>
+    <StackPanel  Width="450" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBox Margin="10,10,10,0" Padding="10" Name="LoginBox" GotFocus="usernameBoxFocused" LostFocus="loginBoxLostFocus" ></TextBox>
+        <Grid  Margin="10,10,10,0">
+            
+            <PasswordBox  Padding="10" Name="PasswordBox" GotFocus="passwordBoxFocused" LostFocus="passwordBoxLostFocus">
+            </PasswordBox>
+            <TextBlock x:Name="PasswordBlock" IsHitTestVisible="False" Padding="10">Password</TextBlock>
+  
+        </Grid>
+        <Label VerticalAlignment="Top"  Height="auto" Margin="10,0,0,0" FontSize="10" Foreground="Red" Name="LoginError" Visibility="Collapsed"></Label>
+        <Button Margin="10,10,10,0" Padding="10" Click="OnLoginClick">Log in</Button>
         <TextBlock HorizontalAlignment="Center">
             Don't have an account? 
             <Hyperlink NavigateUri="Registration.xaml">Register now! </Hyperlink>

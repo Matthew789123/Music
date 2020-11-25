@@ -103,3 +103,5 @@ C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\MainView.g.cs
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\MainView.baml
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\ItemsDisplay.g.cs
 C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\Views\ItemsDisplay.baml
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\AddPlaylistDialog.g.cs
+C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\AddPlaylistDialog.baml
