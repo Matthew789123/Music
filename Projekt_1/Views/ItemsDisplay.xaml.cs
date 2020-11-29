@@ -1,6 +1,7 @@
 ﻿using Projekt_1.DAL;
 using Projekt_1.Models;
 using Projekt_1.NHibernate;
+using Projekt_1.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Projekt_1.Views
+
+namespace Projekt_1.Views 
 {
     /// <summary>
     /// Interaction logic for SearchView.xaml
@@ -47,7 +49,6 @@ namespace Projekt_1.Views
             var gridView = new GridView();
             this.ItemsContainer.View = gridView;
             ItemsLabel.Content = "ARTISTS";
-            GenresList.Visibility = Visibility.Hidden;
             gridView.Columns.Add(new GridViewColumn
             {
                 Header = "Name",
@@ -68,7 +69,6 @@ namespace Projekt_1.Views
             var gridView = new GridView();
             this.ItemsContainer.View = gridView;
             ItemsLabel.Content = "ALBUMS";
-            GenresList.Visibility = Visibility.Hidden;
             gridView.Columns.Add(new GridViewColumn
             {
                 Header = "Title",
@@ -102,8 +102,6 @@ namespace Projekt_1.Views
             var gridView = new GridView();
             this.ItemsContainer.View = gridView;
             ItemsLabel.Content = "PLAYLIST";
-
-            GenresList.Visibility = Visibility.Visible;
             gridView.Columns.Add(new GridViewColumn
             {
                 Header = "Title",
@@ -149,8 +147,6 @@ namespace Projekt_1.Views
             var gridView = new GridView();
             this.ItemsContainer.View = gridView;
             ItemsLabel.Content = "SONGS";
-           
-            GenresList.Visibility = Visibility.Visible;
             gridView.Columns.Add(new GridViewColumn
             {
                 Header = "Title",
@@ -176,7 +172,13 @@ namespace Projekt_1.Views
                 Header = "Artists",
                 DisplayMemberBinding = new Binding("artistsToString")
             });
-           
+
+            gridView.Columns.Add(new GridViewColumn
+            {
+                CellTemplate= (DataTemplate)this.Resources["ListButton"]
+            }) ;
+
+
             using (var session = NHibernateHelper.OpenSession())
             {
                 foreach (Songs s in db.GetAll<Songs>(session))
@@ -261,6 +263,14 @@ namespace Projekt_1.Views
 
 
             }
+        }
+
+        private void SelectSong(object sender, SelectionChangedEventArgs e)
+        {
+            MainWindow window = (MainWindow)Application.Current.MainWindow;
+            SongDetails detail = new SongDetails();
+            MainView view = (MainView) window.MainFrame.Content;
+            view.ActivityFrame.Navigate(detail);
         }
     }
 }

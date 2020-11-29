@@ -13,7 +13,14 @@
        
         <Label HorizontalAlignment="Center" Margin="10,10,10,0" Padding="10" Name="LoginBox">Create new playlist</Label>
         <TextBox Margin="10,0" Name="NewPlaylistName" Padding="10" LostFocus="textBoxLostFocus" GotFocus="textBoxGotFocus"></TextBox>
-        <Button Margin="180,10,180,10" Padding="5" Width="auto" Click="onCreateClick" >Create</Button>
-        <Button Margin="180,10,180,10" Padding="5" Width="auto" Click="oncloseClick" >Cancel</Button>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="90,10,5,10" Padding="5" Width="auto" HorizontalAlignment="Right"  Click="onCreateClick" >Create</Button>
+            <Button Grid.Column="1" Margin="5,10,90,10" Padding="5" Width="auto" HorizontalAlignment="Left" Click="oncloseClick" >Cancel</Button>
+        </Grid>
+        
     </StackPanel>
 </Window>

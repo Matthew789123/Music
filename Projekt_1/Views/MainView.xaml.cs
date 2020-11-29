@@ -79,6 +79,11 @@ namespace Projekt_1.Views
 
         }
 
-  
+        private void onHomeButtonClick(object sender, RoutedEventArgs e)
+        {
+            SongDetails detail = new SongDetails();
+            ActivityFrame.NavigationService.Navigate(detail);
+
+        }
     }
 }
