@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Projekt_1.Controls.Test"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Projekt_1.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <!--This file is compatible with Silverlight-->
+    <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg8" Width="210" Height="297">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <!--Unknown tag: sodipodi:namedview-->
+        <!--Unknown tag: metadata-->
+        <Canvas Name="layer1">
+            <Ellipse xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="9.3" Canvas.Top="1.3" Width="13.2" Height="13.2" Name="path25" Fill="Magenta" StrokeThickness="0.264583"/>
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path35" StrokeThickness="0.264583" Stroke="#FF000000" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Data="m 13.229167 3.96875 v 7.9375 L 19.84375 7.9374999 Z m 1.322916 2.6458333 V 9.2604167 L 17.197917 7.9375 Z"/>
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path37" Fill="#FFA0A0A0" StrokeThickness="0.0892857" Data="m 50.580948 29.980635 c 0 -7.688166 0.03013 -13.961969 0.06696 -13.941785 0.03683 0.02018 5.281799 3.163428 11.655486 6.984988 9.136892 5.478333 11.564127 6.970611 11.473215 7.0538 -0.140987 0.129008 -23.068825 13.881481 -23.142918 13.881481 -0.02901 0 -0.05275 -6.290318 -0.05275 -13.978484 z m 9.776603 2.974342 c 3.167512 -1.583528 5.759112 -2.90936 5.759112 -2.946293 0 -0.05873 -11.534963 -5.870994 -11.651516 -5.870994 -0.0247 0 -0.04491 2.631697 -0.04491 5.848215 0 3.831291 0.03073 5.848214 0.0891 5.848214 0.04901 0 2.680703 -1.295614 5.848214 -2.879142 z">
+                <Path.RenderTransform>
+                    <ScaleTransform ScaleX="0.26458333" ScaleY="0.26458333"/>
+                </Path.RenderTransform>
+            </Path>
+        </Canvas>
+    </Canvas>
+</UserControl>

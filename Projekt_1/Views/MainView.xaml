@@ -26,21 +26,17 @@
                     <RowDefinition/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Margin="5" Grid.Column="0">
-                    <Button>Home</Button>
+                <StackPanel Margin="5,5,0,5" Grid.Column="0">
+                    <Button Click="onHomeButtonClick">Home</Button>
                     <Button Click="onArtistsButtonClick">Artists</Button>
                     <Button Click="onAlbumsButtonClick">Albums</Button>
                     <Button Click="onSongsButtonClick" >Songs</Button>
                     <Label>Your playlists:</Label>
                 </StackPanel>
 
-                <ListBox Margin="5" Grid.Row="1"  BorderThickness="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <ListBoxItem>ads</ListBoxItem>
-                    <ListBoxItem>ads</ListBoxItem>
-                    <ListBoxItem>ads</ListBoxItem>
-
+                <ListBox x:Name="PlaylistListBox" SelectionChanged="playlistSelected" Margin="5,5,0,5" Grid.Row="1"  BorderThickness="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 </ListBox>
-                <Button Grid.Row="2" VerticalAlignment="Bottom" Margin="5">Add new playlist</Button>
+                <Button Grid.Row="2" VerticalAlignment="Bottom" Margin="5,5,0,5" Click="onAddPlaylistButtonClick">Add new playlist</Button>
             </Grid>
 
             <Grid Grid.Column="1" Margin="5">
@@ -52,9 +48,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Padding="5" Margin="0,0,5,0">Searchbar</TextBox>
-                <Button Padding="5" Grid.Column="1">Search</Button>
-                <Frame Margin="0 5 5 0" Content="" NavigationUIVisibility="Hidden" Name="ActivityFrame" Grid.Row="1" Grid.ColumnSpan="2"></Frame>
+   
+                <Frame Content="" NavigationUIVisibility="Hidden" Name="ActivityFrame" Grid.Row="1" Grid.ColumnSpan="2"></Frame>
             </Grid>
             
         </Grid>

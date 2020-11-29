@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Projekt_1.DAL;
+using Projekt_1.Models;
+using Projekt_1.NHibernate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,31 +23,67 @@ namespace Projekt_1.Views
     /// </summary>
     public partial class MainView : Page
     {
+        Database db;
+        
         public MainView()
         {
             InitializeComponent();
+            db = Database.getInstanece();
+        
+
+            using(var session=NHibernateHelper.OpenSession())
+            {
+                foreach(Playlists p in db.GetPlaylists(session))
+                {
+                    PlaylistListBox.Items.Add(p);
+                }
+            }
         }
 
 
         private void onArtistsButtonClick(object sender, RoutedEventArgs e)
         {
-            ItemsDisplay items = new ItemsDisplay();
+            ItemsDisplay items = new ArtistsDisplay();
             ActivityFrame.NavigationService.Navigate(items);
-            items.getAllArtists();
+            items.setViewContent();
         }
 
         private void onSongsButtonClick(object sender, RoutedEventArgs e)
         {
-            ItemsDisplay items = new ItemsDisplay();
+            ItemsDisplay items = new SongsDisplay();
             ActivityFrame.NavigationService.Navigate(items);
-            items.getAllSongs();
+            items.setViewContent();
         }
 
         private void onAlbumsButtonClick(object sender, RoutedEventArgs e)
         {
-            ItemsDisplay items = new ItemsDisplay();
+            ItemsDisplay items = new AlbumsDisplay();
             ActivityFrame.NavigationService.Navigate(items);
-            items.getAllAlbums();
+            items.setViewContent();
+        }
+
+        private void onAddPlaylistButtonClick(object sender, RoutedEventArgs e)
+        {
+            AddPlaylistDialog dlg = new AddPlaylistDialog();
+            dlg.Owner = Application.Current.MainWindow;
+            dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            dlg.Show();
+            dlg.Owner = null;
+        }
+
+        private void playlistSelected(object sender, SelectionChangedEventArgs e)
+        {
+            ItemsDisplay items = new PlaylistDisplay();
+            ActivityFrame.NavigationService.Navigate(items);
+            items.setViewContent();
+
+        }
+
+        private void onHomeButtonClick(object sender, RoutedEventArgs e)
+        {
+            SongDetails detail = new SongDetails();
+            ActivityFrame.NavigationService.Navigate(detail);
+
         }
     }
 }

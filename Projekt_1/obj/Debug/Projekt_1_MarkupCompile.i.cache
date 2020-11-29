@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Test\Desktop\Music\Projekt_1\App.xaml
-5881439255
+11-1964447484
 
-28-2139758144
+341241436809
 241807703323
-MainWindow.xaml;Views\Login.xaml;Views\MainView.xaml;Views\Registration.xaml;Views\ItemsDisplay.xaml;
+AddPlaylistDialog.xaml;ChoosePlaylist.xaml;Controls\PlayButton.xaml;Controls\StarRating.xaml;Controls\Test.xaml;MainWindow.xaml;Views\Login.xaml;Views\MainView.xaml;Views\Registration.xaml;Views\ItemsDisplay.xaml;Views\SongDetails.xaml;
 
 True
 
