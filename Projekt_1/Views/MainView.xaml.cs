@@ -43,23 +43,23 @@ namespace Projekt_1.Views
 
         private void onArtistsButtonClick(object sender, RoutedEventArgs e)
         {
-            ItemsDisplay items = new ItemsDisplay();
+            ItemsDisplay items = new ArtistsDisplay();
             ActivityFrame.NavigationService.Navigate(items);
-            items.getAllArtists();
+            items.setViewContent();
         }
 
         private void onSongsButtonClick(object sender, RoutedEventArgs e)
         {
-            ItemsDisplay items = new ItemsDisplay();
+            ItemsDisplay items = new SongsDisplay();
             ActivityFrame.NavigationService.Navigate(items);
-            items.getAllSongs();
+            items.setViewContent();
         }
 
         private void onAlbumsButtonClick(object sender, RoutedEventArgs e)
         {
-            ItemsDisplay items = new ItemsDisplay();
+            ItemsDisplay items = new AlbumsDisplay();
             ActivityFrame.NavigationService.Navigate(items);
-            items.getAllAlbums();
+            items.setViewContent();
         }
 
         private void onAddPlaylistButtonClick(object sender, RoutedEventArgs e)
@@ -73,9 +73,9 @@ namespace Projekt_1.Views
 
         private void playlistSelected(object sender, SelectionChangedEventArgs e)
         {
-            ItemsDisplay items = new ItemsDisplay();
+            ItemsDisplay items = new PlaylistDisplay();
             ActivityFrame.NavigationService.Navigate(items);
-            items.getPlaylistSongs((Playlists)PlaylistListBox.SelectedItem);
+            items.setViewContent();
 
         }
 

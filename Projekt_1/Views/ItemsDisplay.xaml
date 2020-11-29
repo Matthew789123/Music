@@ -33,7 +33,7 @@
         <Label Grid.Row="1" Grid.ColumnSpan="2" Name="ItemsLabel" FontSize="30" FontWeight="Bold"></Label>
      
   
-        <ListView Grid.ColumnSpan="3" Grid.Row="2" Name="ItemsContainer" SelectionChanged="SelectSong">
+        <ListView Grid.ColumnSpan="3" Grid.Row="2" Name="ItemsContainer" SelectionChanged="SelectItem">
         </ListView>
     </Grid>
 </Page>

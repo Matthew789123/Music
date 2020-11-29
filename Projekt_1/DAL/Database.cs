@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_1.DAL
 {
-     class Database
+    public class Database
     {
         private static Database db;
         private Users loggedUser;

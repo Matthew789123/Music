@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\
+C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\
 Projekt_1
 none
 false
 DEBUG;TRACE
-C:\Users\Test\Desktop\Music\Projekt_1\App.xaml
+C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\App.xaml
 11-1964447484
 
-341241436809
-241807703323
+332083796176
+24257236031
 AddPlaylistDialog.xaml;ChoosePlaylist.xaml;Controls\PlayButton.xaml;Controls\StarRating.xaml;Controls\Test.xaml;MainWindow.xaml;Views\Login.xaml;Views\MainView.xaml;Views\Registration.xaml;Views\ItemsDisplay.xaml;Views\SongDetails.xaml;
 
-True
+False
 
