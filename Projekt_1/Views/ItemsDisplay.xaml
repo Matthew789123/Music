@@ -12,18 +12,29 @@
       >
     <Page.Resources>
         <DataTemplate x:Key="AddToPlaylistButton">
-            <Button Template="{StaticResource ToggleAddToPlaylist}"/>
+            <Button Click="OnAddToPlaylistButtonClick" Template="{StaticResource ToggleAddToPlaylist}"/>
         </DataTemplate>
         <DataTemplate x:Key="AddPlaylist">
-            <Button Template="{StaticResource ToggleAddPlaylist}"/>
+            <Button Click="AddAlbumAsPlaylistButtonClick" Template="{StaticResource ToggleAddPlaylist}"/>
         </DataTemplate>
         <DataTemplate x:Key="AddToFavourites">
             <control:Favourites Loaded="FavouriteStatus" onUncheck="RemoveArtistsFromFavourites" onCheck="AddArtistToFavourites"/>
         </DataTemplate>
-      
-        
-        
+        <DataTemplate x:Key="PlaySong">
+            <Button x:Name="p" Template="{StaticResource TogglePlaySongButton}">
+                <Button.Visibility>
+                    <Binding ElementName="ItemContainer" Path="SelectedItem.IsMouseOver">
+                        
+                    </Binding>
+                </Button.Visibility>
+            </Button>
+            
+        </DataTemplate>
+
+
+
     </Page.Resources>
+ 
     <Grid>
    
         <Grid.RowDefinitions>
@@ -45,14 +56,13 @@
 
         <ListView Grid.ColumnSpan="3" Grid.Row="2" Name="ItemsContainer" SelectionChanged="SelectItem" Background="#616161" >
             <ListView.ItemContainerStyle>
-                
-                <Style TargetType="ListViewItem">
+                <Style TargetType="ListViewItem" x:Name="Item">
                     <Setter Property="Foreground" Value="Black"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#616161"/>
-                            
                         </Trigger>
+                        
                     </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
@@ -66,9 +76,11 @@
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#616161"/>
+                                    
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
+                        
                     </GridView.ColumnHeaderContainerStyle>
                 </GridView>
             </ListView.View>

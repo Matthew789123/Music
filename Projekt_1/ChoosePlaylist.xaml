@@ -12,7 +12,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
             <Label Style="{StaticResource LabelStyle}" HorizontalAlignment="Center" Margin="10,10,10,0" Padding="10">Choose Playlist</Label>
-            <ComboBox Background="#616161" ItemContainerStyle="{StaticResource ComboboxStyle}" Name="Playlists" Margin="5,0"> </ComboBox>
+            <ComboBox Background="#616161" ItemContainerStyle="{StaticResource ComboboxStyle}" Name="PlaylistsCombo" Margin="5,0"> </ComboBox>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

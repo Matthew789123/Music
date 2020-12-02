@@ -83,7 +83,9 @@ namespace Projekt_1.Views
 
         private void onHomeButtonClick(object sender, RoutedEventArgs e)
         {
-
+            ItemsDisplay items = new HomeDisplay();
+            ActivityFrame.NavigationService.Navigate(items);
+            items.setViewContent();
         }
     }
 }

@@ -13,5 +13,7 @@ namespace Projekt_1.Models
         public virtual IList<Users> users { get; set; }
         public virtual IList<Albums> albums { get; set; }
         public virtual IList<Songs> songs { get; set; }
+
+
     }
 }

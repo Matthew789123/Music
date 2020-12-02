@@ -67,7 +67,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ComboboxStyle" TargetType="ComboBox">
+    <Style x:Key="ComboboxStyle" TargetType="ComboBoxItem">
         <Setter Property="Background" Value="#8e8e8e"/>
         <Setter Property="Template">
         <Setter.Value>
@@ -540,6 +540,34 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <!--PlaySong Button button template-->
+    <ControlTemplate x:Key="TogglePlaySongButton" TargetType="{x:Type Button}">
+        <Canvas
+                    Width="20"
+                    Height="20"
+                    Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+            <Path x:Name="BackGround"
+                         Fill="Transparent"
+                        Data="M0 0h24v24H0z" Height="15" Stretch="Fill" Width="15"/>
+            <Path
+                        x:Name="ButtonPath"
+                        Width="20"
+                        Height="20"
+                        Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"
+                        Fill="Orange"
+                       
+                        Stretch="Fill"/>
+        </Canvas>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="ButtonPath" Property="Fill" Value="#ffcc80"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
+
+    
 
 
     <!--slider-->

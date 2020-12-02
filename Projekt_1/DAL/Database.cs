@@ -271,5 +271,109 @@ namespace Projekt_1.DAL
                 transaction.Commit();
             }
         }
+
+        public void AddSongToPlaylist(Songs s, Playlists p, ISession session)
+        {
+            using(var transaction=session.BeginTransaction())
+            {
+                session.Update(s);
+                session.Update(p);
+                if (p.songs.Contains(s))
+                {
+                    return;
+                }
+                s.playlists.Add(p);
+                p.songs.Add(s);
+                transaction.Commit();
+            }
+        }
+
+        public Playlists AddAlbumAsPlaylist(Albums a, ISession session)
+        {
+            Playlists p = new Playlists();
+            p.songs = new List<Songs>();
+            using (var transaction=session.BeginTransaction())
+            {
+                
+                
+                session.SaveOrUpdate(a);
+                foreach(Playlists playlist in session.QueryOver<Playlists>().List<Playlists>())
+                {
+                    if(playlist.Name==a.Title)
+                    {
+                        return null;
+                    }
+                }
+
+                foreach(Songs s in a.songs)
+                {
+                    p.songs.Add(s);
+                }
+
+                p.Name = a.Title;
+                p.Users_Id = loggedUser;
+                session.Save(p);
+                transaction.Commit();
+            }
+            return p;
+        }
+
+
+        public IList<Songs> GetSongsFormAlbum(Albums a, ISession session)
+        {
+            Albums album= session.Get<Albums>(a.Id);
+            return (IList<Songs>)album.songs;
+        }
+
+        public IList<Albums> GetAlbumsFromArtist(Artists a, ISession session)
+        {
+            Artists artist = session.Get<Artists>(a.Id);
+            return (IList<Albums>)artist.albums;
+        }
+
+
+        public List<Tuple<List<Artists>, Songs>> GetRecentReleases(ISession session)
+        {
+            List<Tuple<List<Artists>, Songs>> tuples = new List<Tuple<List<Artists>, Songs>>();
+            List<Artists> artists = db.GetAll<Artists>(session);
+            
+            foreach(Artists a in artists)
+            {
+                if(checkIfArtistsContainsUser(a.users))
+                {
+                    foreach(Songs s in a.songs)
+                    {
+                        if((DateTime.Now- s.Release_date).TotalDays<=30)
+                        {
+                            if(tuples.Find(x=>x.Item2.Id==s.Id)!=null)
+                            {
+                                tuples.Find(x => x.Item2.Id == s.Id).Item1.Add(a);
+                            }
+                            else
+                            {
+                                tuples.Add(new Tuple<List<Artists>, Songs>(new List<Artists>(), s));
+                                tuples.Last().Item1.Add(a);
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            return tuples;
+        } 
+
+       private Boolean checkIfArtistsContainsUser(IList<Users> users)
+        {
+            foreach(Users u in users)
+            {
+                if(u.Id==loggedUser.Id)
+                {
+                    return true;
+                }
+               
+            }
+            return false;
+        }
+
     }
 }

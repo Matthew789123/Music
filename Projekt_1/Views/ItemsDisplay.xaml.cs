@@ -91,6 +91,11 @@ namespace Projekt_1.Views
 
         protected virtual void RemoveArtistsFromFavourites(object sender, EventArgs e) { }
 
+        protected virtual void OnAddToPlaylistButtonClick(object sender, RoutedEventArgs e) { }
+
+        protected virtual void AddAlbumAsPlaylistButtonClick(object sender, RoutedEventArgs e) { }
+
+      
     }
 }
 
@@ -117,7 +122,6 @@ public class ArtistsDisplay : ItemsDisplay
         using(var session=NHibernateHelper.OpenSession())
         {
             favouriteArtists = db.GetUserFavouritesArtists(session);
-            int a = 18;
         }
         
     }
@@ -178,6 +182,21 @@ public class ArtistsDisplay : ItemsDisplay
             db.RemoveArtistFromFavourites(a, session);
         }
     }
+
+    protected override void SelectItem(object sender, SelectionChangedEventArgs e)
+    {
+        MainWindow window = (MainWindow)Application.Current.MainWindow;
+        Artists a = (Artists)ItemsContainer.SelectedItem;
+        AlbumsDisplay albumsFromArtists = new AlbumsDisplay();
+        MainView view = (MainView)window.MainFrame.Content;
+        view.ActivityFrame.Navigate(albumsFromArtists);
+
+        using (var session = NHibernateHelper.OpenSession())
+        {
+            albumsFromArtists.setViewContent((IList<Albums>)db.GetAlbumsFromArtist(a, session));
+
+        }
+    }
 }
 
 public class AlbumsDisplay : ItemsDisplay
@@ -223,6 +242,18 @@ public class AlbumsDisplay : ItemsDisplay
         }
     }
 
+    public void setViewContent(IList<Albums> albums)
+    {
+        using (var session = NHibernateHelper.OpenSession())
+        {
+            foreach (Albums a in albums)
+            {
+                a.artists.ToString();
+                ItemsContainer.Items.Add(a);
+            }
+        }
+    }
+
     protected override void filterContent()
     {
         using (var session = NHibernateHelper.OpenSession())
@@ -234,13 +265,47 @@ public class AlbumsDisplay : ItemsDisplay
             }
         }
     }
+
+    protected override void AddAlbumAsPlaylistButtonClick(object sender, RoutedEventArgs e)
+    {
+        Button bt = (Button)sender;
+        Albums s = (Albums)bt.DataContext;
+        using (var session=NHibernateHelper.OpenSession())
+        {
+            Playlists p = db.AddAlbumAsPlaylist(s, session);
+            if (p==null)
+            {
+                return;
+            }
+            MainWindow window = (MainWindow)Application.Current.MainWindow;
+            MainView view = (MainView)window.MainFrame.Content;
+            view.PlaylistListBox.Items.Add(p);
+        }
+
+    }
+
+    protected override void SelectItem(object sender, SelectionChangedEventArgs e)
+    {
+        MainWindow window = (MainWindow)Application.Current.MainWindow;
+        Albums a = (Albums)ItemsContainer.SelectedItem;
+        SongsDisplay songsFromAlbum = new SongsDisplay();
+        MainView view = (MainView)window.MainFrame.Content;
+        view.ActivityFrame.Navigate(songsFromAlbum);
+        
+        using(var session = NHibernateHelper.OpenSession())
+        {
+            songsFromAlbum.setViewContent((IList<Songs>)db.GetSongsFormAlbum(a,session));
+            
+        }
+    }
+
 }
 
 public class SongsDisplay : ItemsDisplay
 {
     public SongsDisplay() : base()
     {
-
+        
         ItemsLabel.Content = "SONGS";
         ItemsGrid.Columns.Add(new GridViewColumn
         {
@@ -278,6 +343,11 @@ public class SongsDisplay : ItemsDisplay
             HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
             CellTemplate = (DataTemplate)this.Resources["AddToPlaylistButton"]
         });
+        ItemsGrid.Columns.Add(new GridViewColumn
+        {
+            HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
+            CellTemplate = (DataTemplate)this.Resources["PlaySong"]
+        });
     }
 
     public override void setViewContent()
@@ -285,6 +355,19 @@ public class SongsDisplay : ItemsDisplay
         using (var session = NHibernateHelper.OpenSession())
         {
             foreach (Songs s in db.GetAll<Songs>(session))
+            {
+                s.genres.ToString();
+                s.artists.ToString();
+                ItemsContainer.Items.Add(s);
+            }
+        }
+    }
+
+    public void setViewContent(IList<Songs> songs)
+    {
+        using (var session = NHibernateHelper.OpenSession())
+        {
+            foreach (Songs s in songs)
             {
                 s.genres.ToString();
                 s.artists.ToString();
@@ -308,14 +391,29 @@ public class SongsDisplay : ItemsDisplay
 
     protected override void SelectItem(object sender, SelectionChangedEventArgs e)
     {
+        if (ItemsContainer.SelectedIndex == -1)
+            return;
         MainWindow window = (MainWindow)Application.Current.MainWindow;
         Songs s = (Songs)ItemsContainer.SelectedItem;
+        ItemsContainer.SelectedIndex = -1;
         SongDetails detail = new SongDetails(s.Id);
         MainView view = (MainView)window.MainFrame.Content;
         view.ActivityFrame.Navigate(detail);
     }
 
-    
+    protected override void OnAddToPlaylistButtonClick(object sender, RoutedEventArgs e)
+    {
+        Button bt = (Button)sender;
+        Songs s = (Songs)bt.DataContext;
+
+        ChoosePlaylist dlg = new ChoosePlaylist(s);
+        dlg.Owner = Application.Current.MainWindow;
+        dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        dlg.ShowDialog();
+        dlg.Owner = null;
+
+    }
+
 }
 
 public class PlaylistDisplay : ItemsDisplay
@@ -431,4 +529,70 @@ public class PlaylistDisplay : ItemsDisplay
   
     }
 
+}
+
+public class HomeDisplay:ItemsDisplay
+{
+    public HomeDisplay() : base()
+    {
+        ItemsLabel.Content = "NEW RELEASES FOR YOU";
+        ItemsGrid.Columns.Add(new GridViewColumn
+        {
+            HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
+            Header = "Artists",
+            DisplayMemberBinding = new Binding("Item1")
+        });
+        ItemsGrid.Columns.Add(new GridViewColumn
+        {
+            HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
+            Header = "Title",
+            DisplayMemberBinding = new Binding("Item2.Title")
+        });
+        ItemsGrid.Columns.Add(new GridViewColumn
+        {
+            HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
+            Header = "Release date",
+            DisplayMemberBinding = new Binding("Item2.Release_date")
+        });
+        
+    }
+
+    public override void setViewContent()
+    {
+        using (var session = NHibernateHelper.OpenSession())
+        {
+            foreach (Tuple<List<Artists>,Songs> t in db.GetRecentReleases(session))
+            {
+                string s = "";
+                foreach (Artists a in t.Item1)
+                {
+                    s += a.Name + "\n";
+                }
+                s = s.TrimEnd('\n');
+
+                Tuple<string, Songs> stringSongTuple = new Tuple<string, Songs>(s,t.Item2);
+                ItemsContainer.Items.Add(stringSongTuple);
+                
+            }
+            ItemsContainer.Items.SortDescriptions.Add(new SortDescription("Item2.Release_date",ListSortDirection.Descending));
+        }
+    }
+
+    protected override void SelectItem(object sender, SelectionChangedEventArgs e)
+    {
+        if (ItemsContainer.SelectedIndex == -1)
+            return;
+        MainWindow window = (MainWindow)Application.Current.MainWindow;
+        Tuple<string,Songs> s = (Tuple<string,Songs>)ItemsContainer.SelectedItem;
+
+        ItemsContainer.SelectedIndex = -1;
+        SongDetails detail = new SongDetails(s.Item2.Id);
+
+        MainView view = (MainView)window.MainFrame.Content;
+        view.ActivityFrame.Navigate(detail);
+    }
+
+    protected override void filterContent()
+    {
+    }
 }

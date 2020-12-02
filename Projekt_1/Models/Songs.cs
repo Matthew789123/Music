@@ -30,6 +30,7 @@ namespace Projekt_1.Models
                 {
                     s += g.Name+"\n";
                 }
+                s = s.TrimEnd('\n');
                 return s;
             } 
         }
@@ -43,6 +44,7 @@ namespace Projekt_1.Models
                 {
                     s += g.Name + "\n";
                 }
+                s = s.TrimEnd('\n');
                 return s;
             }
         }
