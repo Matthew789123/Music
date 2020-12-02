@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Projekt_1.DAL;
+using Projekt_1.Models;
+using Projekt_1.NHibernate;
+using Projekt_1.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +23,23 @@ namespace Projekt_1
     /// </summary>
     public partial class ChoosePlaylist : Window
     {
-        public ChoosePlaylist()
+        private Database db = Database.getInstanece();
+        private Songs s;
+        public ChoosePlaylist(Songs s)
         {
             InitializeComponent();
+            this.s = s;
+
+            MainWindow window = (MainWindow)Application.Current.MainWindow;
+            MainView view = (MainView)window.MainFrame.Content;
+            List<Playlists> selectedFields = view.PlaylistListBox.Items.OfType<Playlists>().ToList();
+
+           foreach(Playlists p in selectedFields)
+            {
+                PlaylistsCombo.Items.Add(p);
+            }
+
+            PlaylistsCombo.SelectedIndex = 0;
         }
 
 
@@ -33,6 +51,13 @@ namespace Projekt_1
         private void onAddClick(object sender, RoutedEventArgs e)
         {
 
+            
+            using(var session=NHibernateHelper.OpenSession())
+            {
+
+                db.AddSongToPlaylist(s, (Playlists)PlaylistsCombo.SelectedItem, session);
+            }
+            Close();
         }
     }
 }

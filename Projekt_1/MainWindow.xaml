@@ -1,4 +1,4 @@
-﻿<Window x:Class="Projekt_1.MainWindow"
+﻿<Window x:Class="Projekt_1.MainWindow" Background="#212121"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,4 +7,5 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Frame Content="" NavigationUIVisibility="Hidden" Name="MainFrame" />
+    
 </Window>

@@ -4,9 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Projekt_1.Views"
+      xmlns:control = "clr-namespace:Projekt_1.Controls" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainView">
+      Title="MainView" >
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,19 +25,28 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
-                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Margin="5,5,0,5" Grid.Column="0">
-                    <Button Click="onHomeButtonClick">Home</Button>
-                    <Button Click="onArtistsButtonClick">Artists</Button>
-                    <Button Click="onAlbumsButtonClick">Albums</Button>
-                    <Button Click="onSongsButtonClick" >Songs</Button>
-                    <Label>Your playlists:</Label>
+                    <Button Click="onHomeButtonClick" Template="{StaticResource ButtonTemplate}">Home</Button>
+                    <Button Click="onSongsButtonClick"  Template="{StaticResource ButtonTemplate}">Songs</Button>
+                    <Button Click="onAlbumsButtonClick" Template="{StaticResource ButtonTemplate}">Albums</Button>
+                    
+                    <Button Click="onArtistsButtonClick" Template="{StaticResource ButtonTemplate}">Artists</Button>
+                    
+                    
+                    <Grid>
+                        <Label Style="{StaticResource LabelStyle}">Your playlists:</Label>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Template="{StaticResource ToggleAddPlaylist}" Margin="5" Click="onAddPlaylistButtonClick">Add new playlist</Button>
+                    </Grid>
                 </StackPanel>
 
-                <ListBox x:Name="PlaylistListBox" SelectionChanged="playlistSelected" Margin="5,5,0,5" Grid.Row="1"  BorderThickness="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                <ListBox Background="#616161"  ItemContainerStyle="{StaticResource ListBoxStyle}" x:Name="PlaylistListBox" SelectionChanged="playlistSelected" Margin="5,5,0,5" Grid.Row="1"  BorderThickness="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                
                 </ListBox>
-                <Button Grid.Row="2" VerticalAlignment="Bottom" Margin="5,5,0,5" Click="onAddPlaylistButtonClick">Add new playlist</Button>
+
+
+
             </Grid>
 
             <Grid Grid.Column="1" Margin="5">
@@ -48,50 +58,104 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-   
+
                 <Frame Content="" NavigationUIVisibility="Hidden" Name="ActivityFrame" Grid.Row="1" Grid.ColumnSpan="2"></Frame>
             </Grid>
-            
+
         </Grid>
-      
-        
+
+
         <!--STEROWANIE PLAYEREM-->
-        <Grid Grid.Row="1" Margin="5" Background="#44444444">
+        <Grid Grid.Row="1" Margin="5" Background="#616161">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" VerticalAlignment="Center">Co grane</Label>
+            <Label Style="{StaticResource LabelStyle}" Grid.Column="0" VerticalAlignment="Center">Co grane</Label>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button >Shuffle</Button>
-                    <Button >Previous</Button>
-                    <Button >Play/Pause</Button>
-                    <Button >Next</Button>
-                    <Button >Loop</Button>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button
+                    Margin="5"
+                    x:Name="Shuffle"
+                    Width="15"
+                    Height="15"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource ToggleShuffleButton}"/>
+
+                    <Button
+                    Margin="5"
+                    x:Name="Previous"
+                    Width="15"
+                    Height="15"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource TogglePlayPreviousButton}"/>
+
+                    <Button
+                    Margin="5"
+                    x:Name="Play"
+                    Width="30"
+                    Height="30"
+                    Content="All"
+                    Padding="2"
+                    Template="{StaticResource TogglePlayButton}"/>
+
+                    <Button
+                    Margin="5"
+                    x:Name="Next"
+                   Width="15"
+                    Height="15"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource TogglePlayNextButton}"/>
+
+                    <Button
+                    Margin="5"
+                    x:Name="Loop"
+                    Width="15"
+                    Height="15"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource ToggleLoopButton}"/>
+
                 </StackPanel>
-                <Label Grid.Row="1">0.00</Label>
-                <Slider Grid.Row="1" Margin="35 0"></Slider>
-                <Label Grid.Row="1" HorizontalAlignment="Right">1,11</Label>
+                <Label Style="{StaticResource LabelStyle}" Grid.Row="1" VerticalAlignment="Center">0.00</Label>
+                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center"  Grid.Row="1" Margin="35 0"></Slider>
+                <Label Style="{StaticResource LabelStyle}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">1,11</Label>
             </Grid>
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
-                <Button Height="auto" Margin="5">place</Button>
-                <Button Height="auto" Margin="5">holder</Button>
-               
-                <Slider VerticalAlignment="Center" Maximum="100" Width="100" ></Slider>
-                
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="10">
+                <Button
+                    Margin="5"
+                    
+                    Width="15"
+                    Height="15"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource ToggleQueueButton}"/>
+
+                <Button
+                    Margin="5"
+                    Width="15"
+                    Height="15"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource ToggleVolumeHighButton}"/>
+
+                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" Maximum="100" Width="100" ></Slider>
+
             </StackPanel>
-              
+
         </Grid>
 
     </Grid>
-    
-    
-    
-    
+
+
+
+
 </Page>

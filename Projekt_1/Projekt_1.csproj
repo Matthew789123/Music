@@ -88,14 +88,47 @@
     <Compile Include="ChoosePlaylist.xaml.cs">
       <DependentUpon>ChoosePlaylist.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AddPlaylist.xaml.cs">
+      <DependentUpon>AddPlaylist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AddToPlaylistButton.xaml.cs">
+      <DependentUpon>AddToPlaylistButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomTextBox.xaml.cs">
+      <DependentUpon>CustomTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Favourites.xaml.cs">
+      <DependentUpon>Favourites.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoopButton.xaml.cs">
+      <DependentUpon>LoopButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NoVolumeButton.xaml.cs">
+      <DependentUpon>NoVolumeButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PauseButton.xaml.cs">
+      <DependentUpon>PauseButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PlayButton.xaml.cs">
       <DependentUpon>PlayButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlayNextButton.xaml.cs">
+      <DependentUpon>PlayNextButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlayPreviousButton.xaml.cs">
+      <DependentUpon>PlayPreviousButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\QueueButton.xaml.cs">
+      <DependentUpon>QueueButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ShuffleButton.xaml.cs">
+      <DependentUpon>ShuffleButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StarRating.xaml.cs">
       <DependentUpon>StarRating.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Test.xaml.cs">
-      <DependentUpon>Test.xaml</DependentUpon>
+    <Compile Include="Controls\VolumeHighButton.xaml.cs">
+      <DependentUpon>VolumeHighButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -120,7 +153,51 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\AddPlaylist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AddToPlaylistButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CustomTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Favourites.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoopButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NoVolumeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PauseButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PlayButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PlayNextButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PlayPreviousButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\QueueButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ShuffleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,7 +205,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Test.xaml">
+    <Page Include="Controls\VolumeHighButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +222,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="scrollbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

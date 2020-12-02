@@ -59,7 +59,7 @@ namespace Projekt_1
 
         private void onCreateClick(object sender, RoutedEventArgs e)
         {
-            if(name=="Name")
+            if(name=="Name" || name=="Your Favourites")
             {
                 return;
             }
@@ -77,5 +77,6 @@ namespace Projekt_1
         {
             Close();
         }
+
     }
 }

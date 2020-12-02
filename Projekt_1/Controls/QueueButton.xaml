@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Projekt_1.Controls.QueueButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Projekt_1.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid >
+        <Grid.Resources>
+
+            <!-- StarButton Template -->
+            <ControlTemplate x:Key="ToggleQueueButton" TargetType="{x:Type Button}">
+                <Canvas
+                   Width="15"
+                    Height="15"
+                    Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+                    <Path x:Name="BackGround"
+                          Fill="Transparent"
+                        Data="M0 0h24v24H0z" Height="15" Stretch="Fill" Width="15"/>
+                    <Path
+                        x:Name="ButtonPath"
+                        Width="15"
+                        Height="15"
+                        Data="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"
+                        
+                        Fill="Black"
+
+                        Stretch="Fill"/>
+                </Canvas>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="ButtonPath" Property="Fill" Value="Gold"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+                <!-- When checked, fill with Yellow -->
+            </ControlTemplate>
+        </Grid.Resources>
+        <Grid Background="Transparent">
+            <Button
+                Margin="2.5"
+                    x:Name="Queue"
+                   Width="15"
+                    Height="15"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource ToggleQueueButton}"/>
+        </Grid>
+    </Grid>
+</UserControl>
+
+    
+    

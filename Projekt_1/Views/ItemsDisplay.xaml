@@ -8,12 +8,33 @@
       xmlns:control = "clr-namespace:Projekt_1.Controls" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SongsView"
+        Unloaded="onUnloaded"
       >
     <Page.Resources>
-        <DataTemplate x:Key="ListButton">
-            <control:StarRating></control:StarRating>
+        <DataTemplate x:Key="AddToPlaylistButton">
+            <Button Click="OnAddToPlaylistButtonClick" Template="{StaticResource ToggleAddToPlaylist}"/>
         </DataTemplate>
+        <DataTemplate x:Key="AddPlaylist">
+            <Button Click="AddAlbumAsPlaylistButtonClick" Template="{StaticResource ToggleAddPlaylist}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="AddToFavourites">
+            <control:Favourites Loaded="FavouriteStatus" onUncheck="RemoveArtistsFromFavourites" onCheck="AddArtistToFavourites"/>
+        </DataTemplate>
+        <DataTemplate x:Key="PlaySong">
+            <Button x:Name="p" Template="{StaticResource TogglePlaySongButton}">
+                <Button.Visibility>
+                    <Binding ElementName="ItemContainer" Path="SelectedItem.IsMouseOver">
+                        
+                    </Binding>
+                </Button.Visibility>
+            </Button>
+            
+        </DataTemplate>
+
+
+
     </Page.Resources>
+ 
     <Grid>
    
         <Grid.RowDefinitions>
@@ -27,13 +48,44 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Name="SearchBar" GotFocus="SearchBarGotFocus" LostFocus="SearchBarLostFocus" Grid.Column="1" Grid.Row="0" Padding="5" Margin="5,0,5,0"></TextBox>
-        <Button Grid.Column="2" Grid.Row="0" Click="onSearchButtonClick" Padding="5">Search</Button>
+        <TextBox Template="{StaticResource TextBoxTemplate}" Name="SearchBar" GotFocus="SearchBarGotFocus" LostFocus="SearchBarLostFocus" Grid.Column="1" Grid.Row="0" Padding="5" Margin="5,0,5,0"></TextBox>
+        <Button Template="{StaticResource ToggleSearchButton}" Grid.Column="2" Grid.Row="0" Click="onSearchButtonClick" Padding="5">Search</Button>
 
-        <Label Grid.Row="1" Grid.ColumnSpan="2" Name="ItemsLabel" FontSize="30" FontWeight="Bold"></Label>
-     
-  
-        <ListView Grid.ColumnSpan="3" Grid.Row="2" Name="ItemsContainer" SelectionChanged="SelectItem">
+        <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.ColumnSpan="2" Name="ItemsLabel" FontSize="30" FontWeight="Bold"></Label>
+        <Button Name="DeleteButton" Click="OnDeleteButtonClick" Template="{StaticResource ToggleDeleteButton}" Grid.Row="1" Visibility="Hidden" Grid.Column="2"></Button>
+
+        <ListView Grid.ColumnSpan="3" Grid.Row="2" Name="ItemsContainer" SelectionChanged="SelectItem" Background="#616161" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem" x:Name="Item">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#616161"/>
+                        </Trigger>
+                        
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView x:Name="ItemsGrid" >
+                    <GridView.ColumnHeaderContainerStyle>
+                        
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            
+                            <Setter Property="Background" Value="#373737"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#616161"/>
+                                    
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                        
+                    </GridView.ColumnHeaderContainerStyle>
+                </GridView>
+            </ListView.View>
+
         </ListView>
+
     </Grid>
 </Page>

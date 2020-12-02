@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Projekt_1.Controls
 {
     /// <summary>
-    /// Interaction logic for Test.xaml
+    /// Interaction logic for ShuffleButton.xaml
     /// </summary>
-    public partial class Test : UserControl
+    public partial class ShuffleButton : UserControl
     {
-        public Test()
+        public ShuffleButton()
         {
             InitializeComponent();
         }

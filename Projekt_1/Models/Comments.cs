@@ -13,5 +13,8 @@ namespace Projekt_1.Models
         public virtual DateTime Post_date { get; set; }
         public virtual Users Users_Id { get; set; }
         public virtual Songs Songs_Id { get; set; }
+
     }
+
+   
 }

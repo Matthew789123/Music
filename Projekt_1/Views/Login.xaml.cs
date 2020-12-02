@@ -51,7 +51,7 @@ namespace Projekt_1.Views
 
         private void loginBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (LoginBox.Text == "")
+            if (LoginBox.Text=="")
             {
                 login = "Username";
                 LoginBox.GetBindingExpression(TextBox.TextProperty).UpdateTarget();
