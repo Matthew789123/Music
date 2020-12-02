@@ -6,29 +6,47 @@
              xmlns:local="clr-namespace:Projekt_1.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid >
         <Grid.Resources>
+
             <!-- StarButton Template -->
-            <ControlTemplate x:Key="PlayButton" TargetType="{x:Type Button}">
+            <ControlTemplate x:Key="TogglePlayButton" TargetType="{x:Type Button}">
                 <Canvas
-                    Width="20.5"
-                    Height="20"
+                    Width="30"
+                    Height="30"
                     Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+                    <Path x:Name="BackGround"
+                          Fill="Transparent"
+                        Data="M0 0h24v24H0z" Height="30" Stretch="Fill" Width="30"/>
                     <Path
                         x:Name="ButtonPath"
-                        Width="20"
-                        Height="20"
+                        Width="30"
+                        Height="30"
                         
-                        Fill="Transparent"
-                        Stroke="Black"
-                        StrokeThickness="2"
+                        Data="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                        
+                        Fill="Black"
                         Stretch="Fill"/>
                 </Canvas>
-                <!-- When checked, fill with Yellow -->
-                
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="ButtonPath" Property="Fill" Value="Gold"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+               
             </ControlTemplate>
         </Grid.Resources>
-        <Button Template="{DynamicResource PlayButton}"/>
-
+        <Grid Background="Transparent">
+            <Button
+                    Margin="2.5"
+                    x:Name="Queue"
+                    Width="30"
+                    Height="30"
+                    Content="All"
+                    Padding="2"
+                    Template="{DynamicResource TogglePlayButton}"/>
+        </Grid>
     </Grid>
+
 </UserControl>

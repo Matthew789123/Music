@@ -29,12 +29,11 @@ namespace Projekt_1.Views
         {
             InitializeComponent();
             db = Database.getInstanece();
-        
-
             using(var session=NHibernateHelper.OpenSession())
             {
                 foreach(Playlists p in db.GetPlaylists(session))
                 {
+                    
                     PlaylistListBox.Items.Add(p);
                 }
             }
@@ -67,22 +66,23 @@ namespace Projekt_1.Views
             AddPlaylistDialog dlg = new AddPlaylistDialog();
             dlg.Owner = Application.Current.MainWindow;
             dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            dlg.Show();
+            dlg.ShowDialog();
             dlg.Owner = null;
         }
 
         private void playlistSelected(object sender, SelectionChangedEventArgs e)
         {
+            ListBox box = (ListBox)sender;
+          
+            if (box.SelectedItem == null)
+                return;
             ItemsDisplay items = new PlaylistDisplay();
             ActivityFrame.NavigationService.Navigate(items);
             items.setViewContent();
-
         }
 
         private void onHomeButtonClick(object sender, RoutedEventArgs e)
         {
-            SongDetails detail = new SongDetails();
-            ActivityFrame.NavigationService.Navigate(detail);
 
         }
     }

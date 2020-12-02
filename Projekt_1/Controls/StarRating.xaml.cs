@@ -23,6 +23,7 @@ namespace Projekt_1.Controls
     public partial class StarRating : UserControl
     {
         private List<CheckBox> CheckBoxes = new List<CheckBox>();
+        public event EventHandler UserControlClick;
         public StarRating()
         {
             InitializeComponent();
@@ -34,7 +35,7 @@ namespace Projekt_1.Controls
         }
 
        private void CheckBoxClick(object sender, RoutedEventArgs e)
-        {
+       {
             
             if(((CheckBox)e.Source).IsChecked==false)
             {
@@ -54,6 +55,13 @@ namespace Projekt_1.Controls
                     CheckBoxes[i].IsChecked = true;
                 }
             }
+            if (UserControlClick != null)
+            {
+                UserControlClick(this, EventArgs.Empty);
+
+            }
         }
+
     }
+
 }

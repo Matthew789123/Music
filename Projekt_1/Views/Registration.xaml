@@ -10,25 +10,25 @@
       Title="Registration">
 
     <StackPanel Height="auto" Width="450" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBox Name="UsernameBox" Margin="10,10,10,0" Padding="10" LostFocus="usernameLostFocus" GotFocus="usernameGotFocus"  >Username</TextBox>
+        <TextBox Name="UsernameBox" Template="{StaticResource TextBoxTemplate}" Margin="10,10,10,0" Padding="10" LostFocus="usernameLostFocus" GotFocus="usernameGotFocus"  >Username</TextBox>
         <Label VerticalAlignment="Top"  Height="auto" Margin="10,0,0,0" FontSize="10" Foreground="Red" Name="UsernameError" Visibility="Collapsed">Please enter a name</Label>
-        <TextBox Name="EmailBox" Margin="10,10,10,0" LostFocus="emailLostFocus" GotFocus="emailGotFocus" Padding="10">Email</TextBox>
+        <TextBox Name="EmailBox" Template="{StaticResource TextBoxTemplate}" Margin="10,10,10,0" LostFocus="emailLostFocus" GotFocus="emailGotFocus" Padding="10">Email</TextBox>
         <Label VerticalAlignment="Top" Height="auto" Margin="10,0,0,0" FontSize="10" Foreground="Red" Name="EmailError" Visibility="Collapsed">Please enter an email</Label>
         <Grid>
-            <PasswordBox x:Name="PasswordBox" Margin="10,10,10,0" Padding="10" LostFocus="passwordLostFocus" GotFocus="passwordGotFocus"></PasswordBox>
+            <PasswordBox x:Name="PasswordBox" Template="{StaticResource PasswordBoxTemplate}" Margin="10,10,10,0" Padding="10" LostFocus="passwordLostFocus" GotFocus="passwordGotFocus"></PasswordBox>
             <TextBlock Margin="10,10,10,0" x:Name="PasswordBlock" IsHitTestVisible="False" Padding="10">Password</TextBlock>
 
         </Grid>
         <Label VerticalAlignment="Top"  Height="auto" Margin="10,0,0,0" FontSize="10" Foreground="Red" Name="PasswordError" Visibility="Collapsed"> Please choose a password</Label>
         <Grid >
-            <PasswordBox x:Name="ConfirmBox" Margin="10,10,10,0" Padding="10" LostFocus="confirmLostFocus" GotFocus="confirmGotFocus"></PasswordBox>
+            <PasswordBox x:Name="ConfirmBox" Template="{StaticResource PasswordBoxTemplate}" Margin="10,10,10,0" Padding="10" LostFocus="confirmLostFocus" GotFocus="confirmGotFocus"></PasswordBox>
             <TextBlock Margin="10,10,10,0" x:Name="ConfirmBlock" IsHitTestVisible="False" Padding="10">Confirm Password</TextBlock>
         </Grid>
         <Label VerticalAlignment="Top"  Height="auto" Margin="10,0,0,0" FontSize="10" Foreground="Red" Name="ConfirmationError" Visibility="Collapsed">Please confirm password</Label>
-        <Button Margin="10,10,10,0" Padding="10" Click="onRegisterButtonClick">Register</Button>
-        <TextBlock HorizontalAlignment="Center">
+        <Button Margin="10,10,10,0" Template="{StaticResource ButtonTemplate}" Padding="10" Click="onRegisterButtonClick">Register</Button>
+        <TextBlock HorizontalAlignment="Center" Foreground="#c43c00">
             Already have an account? 
-            <Hyperlink NavigateUri="Login.xaml">Log in now! </Hyperlink>
+            <Hyperlink Style="{DynamicResource Hyperlink}" NavigateUri="Login.xaml">Log in now! </Hyperlink>
         </TextBlock>
     </StackPanel>
 </Page>

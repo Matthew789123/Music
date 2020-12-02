@@ -1,25 +1,24 @@
-﻿<Window x:Class="Projekt_1.AddPlaylistDialog"
+﻿<Window x:Class="Projekt_1.AddPlaylistDialog" Background="#212121"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projekt_1"
         mc:Ignorable="d"
- 
         SizeToContent="WidthAndHeight"
         WindowStyle="None"
         >
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
        
-        <Label HorizontalAlignment="Center" Margin="10,10,10,0" Padding="10" Name="LoginBox">Create new playlist</Label>
-        <TextBox Margin="10,0" Name="NewPlaylistName" Padding="10" LostFocus="textBoxLostFocus" GotFocus="textBoxGotFocus"></TextBox>
+        <Label Style="{StaticResource LabelStyle}" HorizontalAlignment="Center" Margin="10,10,10,0" Padding="10" Name="LoginBox">Create new playlist</Label>
+        <TextBox Template="{StaticResource TextBoxTemplate}" Margin="10,0" Name="NewPlaylistName" Padding="10" LostFocus="textBoxLostFocus" GotFocus="textBoxGotFocus"></TextBox>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="90,10,5,10" Padding="5" Width="auto" HorizontalAlignment="Right"  Click="onCreateClick" >Create</Button>
-            <Button Grid.Column="1" Margin="5,10,90,10" Padding="5" Width="auto" HorizontalAlignment="Left" Click="oncloseClick" >Cancel</Button>
+            <Button Template="{StaticResource ButtonTemplate}" Grid.Column="0" Margin="90,10,5,10" Padding="5" Width="auto" HorizontalAlignment="Right"  Click="onCreateClick" >Create</Button>
+            <Button Template="{StaticResource ButtonTemplate}" Grid.Column="1" Margin="5,10,90,10" Padding="5" Width="auto" HorizontalAlignment="Left" Click="oncloseClick" >Cancel</Button>
         </Grid>
         
     </StackPanel>

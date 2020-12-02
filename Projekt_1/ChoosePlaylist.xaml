@@ -1,4 +1,4 @@
-﻿<Window x:Class="Projekt_1.ChoosePlaylist"
+﻿<Window x:Class="Projekt_1.ChoosePlaylist" Background="#212121"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,15 +11,15 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-            <Label HorizontalAlignment="Center" Margin="10,10,10,0" Padding="10">Choose Playlist</Label>
-            <ComboBox Name="Playlists" Margin="5,0"> </ComboBox>
+            <Label Style="{StaticResource LabelStyle}" HorizontalAlignment="Center" Margin="10,10,10,0" Padding="10">Choose Playlist</Label>
+            <ComboBox Background="#616161" ItemContainerStyle="{StaticResource ComboboxStyle}" Name="Playlists" Margin="5,0"> </ComboBox>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Margin="90,10,5,10" Padding="12,5" Width="auto" HorizontalAlignment="Right"  Click="onAddClick" >Add</Button>
-                <Button Grid.Column="1" Margin="5,10,90,10" Padding="5" Width="auto" HorizontalAlignment="Left" Click="oncloseClick" >Cancel</Button>
+                <Button Template="{StaticResource ButtonTemplate}" Grid.Column="0" Margin="90,10,5,10" HorizontalAlignment="Right"  Click="onAddClick" Content="  Add   "></Button>
+                <Button Template="{StaticResource ButtonTemplate}" Grid.Column="1" Margin="5,10,90,10" HorizontalAlignment="Left" Click="oncloseClick" >Cancel</Button>
             </Grid>
         </StackPanel>
     </Grid>

@@ -166,5 +166,110 @@ namespace Projekt_1.DAL
             return albums;
         }
 
+
+        public void DeletePlaylist(Playlists playlist, ISession session)
+        {
+            using(var transaction=session.BeginTransaction())
+            {
+                session.Delete(playlist);
+                transaction.Commit();
+            }
+            
+        }
+
+        public Songs GetSong(int id, ISession session)
+        {
+            return session.Get<Songs>(id);
+        }
+
+        public List<Ratings> GetSongRatings(Songs s, ISession session)
+        {
+            return (List<Ratings>)session.QueryOver<Ratings>().Where(x => x.Songs_Id == s).List<Ratings>();
+        }
+
+        public List<Comments> GetSongComments(Songs s, ISession session)
+        {
+            return (List<Comments>)session.QueryOver<Comments>().Where(x => x.Songs_Id == s).List<Comments>();
+        }
+
+
+        public void AddNewComment(Comments comment, ISession session)
+        {
+            using(var transaction=session.BeginTransaction())
+            {
+                comment.Users_Id = loggedUser;
+                session.Save(comment);
+                transaction.Commit();
+            }
+        }
+
+        public Ratings GetYourRating(Songs s,ISession session)
+        {
+            return (Ratings)session.QueryOver<Ratings>().Where(x => x.Songs_Id == s && x.Users_Id == loggedUser).List<Ratings>().FirstOrDefault();
+          
+        }
+
+        public void AddNewRating(Ratings r, ISession session)
+        {
+            using(var transaction=session.BeginTransaction())
+            {
+                r.Users_Id = loggedUser;
+                session.Save(r);
+                transaction.Commit();
+            }
+        }
+
+        public void UpdateRating(Ratings r, ISession session)
+        {
+            using(var transaction = session.BeginTransaction())
+            {
+                session.Update(r);
+                transaction.Commit();
+            }
+        }
+
+        public void AddArtistToFavourites(Artists a, ISession session)
+        {
+
+            using (var transaction = session.BeginTransaction())
+            {
+                Users currentUser = session.Get<Users>(loggedUser.Id);
+                Artists currentArtists = session.Get<Artists>(a.Id);
+                currentArtists.users.Add(currentUser);
+                currentUser.artists.Add(currentArtists);
+                session.Save(currentUser);
+                session.Save(currentArtists);
+                transaction.Commit();
+
+            }
+        }
+
+        public List<Artists> GetUserFavouritesArtists(ISession session)
+        {
+            Users currentUser = session.Get<Users>(loggedUser.Id);
+            List<Artists> artists = new List<Artists>();
+            foreach (Artists a in (List<Artists>)session.QueryOver<Artists>().List<Artists>())
+            {
+                if (currentUser.artists.Contains(a))
+                {
+                    artists.Add(a);
+                }
+            }
+            return artists;
+        }
+
+        public void RemoveArtistFromFavourites(Artists a, ISession session)
+        {  
+            using (var transaction=session.BeginTransaction())
+            {
+                Users currentUser = session.Get<Users>(loggedUser.Id);
+                Artists currentArtists = session.Get<Artists>(a.Id);
+                currentArtists.users.Remove(currentUser);
+                currentUser.artists.Remove(currentArtists);
+                session.Save(currentUser);
+                session.Save(currentArtists);
+                transaction.Commit();
+            }
+        }
     }
 }

@@ -8,24 +8,46 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       FontSize="20"
-      Title="Login">
+      Title="Login"
+      >
+    
 
     <StackPanel  Width="450" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBox Margin="10,10,10,0" Padding="10" Name="LoginBox" GotFocus="usernameBoxFocused" LostFocus="loginBoxLostFocus" ></TextBox>
+        <StackPanel.Resources>
+            <Style x:Key="Hyperlink" TargetType="{x:Type Hyperlink}">
+                <Setter Property="Foreground" Value="Orange"/>
+                <Setter Property="TextDecorations" Value="Underline"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#c43c00"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="True">
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Resources>
+
+        <TextBox Margin="10,10,10,0" Template="{StaticResource TextBoxTemplate}" x:Name="LoginBox" Padding="10" GotFocus="usernameBoxFocused" LostFocus="loginBoxLostFocus" ></TextBox>
         <Grid  Margin="10,10,10,0">
-            
-            <PasswordBox  Padding="10" Name="PasswordBox" GotFocus="passwordBoxFocused" LostFocus="passwordBoxLostFocus">
+
+            <PasswordBox Template="{StaticResource PasswordBoxTemplate}" Padding="10" Name="PasswordBox" GotFocus="passwordBoxFocused" LostFocus="passwordBoxLostFocus">
             </PasswordBox>
             <TextBlock x:Name="PasswordBlock" IsHitTestVisible="False" Padding="10">Password</TextBlock>
             
   
         </Grid>
-        <Label VerticalAlignment="Top"  Height="auto" Margin="10,0,0,0" FontSize="10" Foreground="Red" Name="LoginError" Visibility="Collapsed"></Label>
-        <Button Margin="10,10,10,0" Padding="10" Click="OnLoginClick" >Log in</Button>
-        
-        <TextBlock HorizontalAlignment="Center">
+        <Label VerticalAlignment="Top"  Height="auto" Margin="10,0,0,0" FontSize="10" Foreground="DarkRed" Name="LoginError" Visibility="Collapsed"></Label>
+        <Button Template="{StaticResource ButtonTemplate}" Margin="10,10,10,0" Padding="10" Click="OnLoginClick" Content="Log In">
+            
+        </Button>
+
+        <TextBlock Foreground="#c43c00" HorizontalAlignment="Center">
             Don't have an account? 
-            <Hyperlink NavigateUri="Registration.xaml">Register now! </Hyperlink>
+            <Hyperlink Style="{DynamicResource Hyperlink}" NavigateUri="Registration.xaml">Register now! </Hyperlink>
         </TextBlock>
         
         
