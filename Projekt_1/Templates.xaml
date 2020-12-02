@@ -561,10 +561,12 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="ButtonPath" Property="Fill" Value="#ffcc80"/>
+                
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    
 
 
     

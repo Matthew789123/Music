@@ -117,10 +117,10 @@ namespace Projekt_1.DAL
         public List<T> GetAll<T>(ISession session) where T: class
         {
             
-            if(typeof(T)==typeof(Songs))
+            /*if(typeof(T)==typeof(Songs))
             {
-                session.QueryOver<Albums>().List();
-            }
+               session.QueryOver<Albums>().List();
+            }*/
             List<T> list = (List<T>)session.QueryOver<T>().List();
 
 
@@ -272,6 +272,21 @@ namespace Projekt_1.DAL
             }
         }
 
+
+        public void RemoveSongFromPlaylist(Songs s, Playlists p, ISession session)
+        {
+            using (var transaction = session.BeginTransaction())
+            {
+                Songs currentSong = session.Get<Songs>(s.Id);
+                Playlists currentPlaylist = session.Get<Playlists>(p.Id);
+                currentPlaylist.songs.Remove(currentSong);
+                currentSong.playlists.Remove(currentPlaylist); 
+                session.Save(currentPlaylist);
+                session.Save(currentSong);
+                transaction.Commit();
+            }
+        }
+
         public void AddSongToPlaylist(Songs s, Playlists p, ISession session)
         {
             using(var transaction=session.BeginTransaction())
@@ -336,7 +351,7 @@ namespace Projekt_1.DAL
         {
             List<Tuple<List<Artists>, Songs>> tuples = new List<Tuple<List<Artists>, Songs>>();
             List<Artists> artists = db.GetAll<Artists>(session);
-            
+            Tuple<List<Artists>,Songs> songFind;
             foreach(Artists a in artists)
             {
                 if(checkIfArtistsContainsUser(a.users))
@@ -345,9 +360,11 @@ namespace Projekt_1.DAL
                     {
                         if((DateTime.Now- s.Release_date).TotalDays<=30)
                         {
-                            if(tuples.Find(x=>x.Item2.Id==s.Id)!=null)
+                            songFind = null;
+                            songFind = tuples.Find(x => x.Item2.Id == s.Id);
+                            if (songFind!=null)
                             {
-                                tuples.Find(x => x.Item2.Id == s.Id).Item1.Add(a);
+                                songFind.Item1.Add(a);
                             }
                             else
                             {

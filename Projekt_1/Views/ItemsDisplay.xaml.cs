@@ -95,7 +95,10 @@ namespace Projekt_1.Views
 
         protected virtual void AddAlbumAsPlaylistButtonClick(object sender, RoutedEventArgs e) { }
 
-      
+        protected virtual void RemoveFromPlaylistButtonClick(object sender, RoutedEventArgs e) { }
+
+        protected virtual void OnLogoutButtonClick(object sender, RoutedEventArgs e) { }
+ 
     }
 }
 
@@ -453,6 +456,16 @@ public class PlaylistDisplay : ItemsDisplay
             Header = "Artists",
             DisplayMemberBinding = new Binding("artistsToString")
         });
+        ItemsGrid.Columns.Add(new GridViewColumn
+        {
+            HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
+            CellTemplate = (DataTemplate)this.Resources["PlaySong"]
+        });
+        ItemsGrid.Columns.Add(new GridViewColumn
+        {
+            HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
+            CellTemplate = (DataTemplate)this.Resources["DeleteSong"]
+        });
     }
 
     public override void setViewContent()
@@ -529,12 +542,34 @@ public class PlaylistDisplay : ItemsDisplay
   
     }
 
+    protected override void RemoveFromPlaylistButtonClick(object sender, RoutedEventArgs e)
+    {
+
+        MainWindow window = (MainWindow)Application.Current.MainWindow;
+        MainView view = (MainView)window.MainFrame.Content;
+        Playlists playlist = (Playlists)view.PlaylistListBox.SelectedItem;
+        Button bt = (Button)sender;
+        Songs s = (Songs)bt.DataContext;
+
+        using (var session = NHibernateHelper.OpenSession())
+        {
+            db.RemoveSongFromPlaylist(s,playlist, session);
+        }
+        ItemsContainer.Items.Remove(s);
+        
+
+    }
+
+
 }
 
 public class HomeDisplay:ItemsDisplay
 {
     public HomeDisplay() : base()
     {
+        LogoutButton.Visibility = Visibility.Visible;
+        SearchBar.Visibility = Visibility.Collapsed;
+        SearchButton.Visibility = Visibility.Collapsed;
         ItemsLabel.Content = "NEW RELEASES FOR YOU";
         ItemsGrid.Columns.Add(new GridViewColumn
         {
@@ -592,6 +627,14 @@ public class HomeDisplay:ItemsDisplay
         view.ActivityFrame.Navigate(detail);
     }
 
+    protected override void OnLogoutButtonClick(object sender, RoutedEventArgs e)
+    {
+        MainWindow wnd = (MainWindow)Application.Current.MainWindow;
+        wnd.MainFrame.Content = "";
+        Login login = new Login();
+        wnd.MainFrame.Navigate(login);
+        
+    }
     protected override void filterContent()
     {
     }

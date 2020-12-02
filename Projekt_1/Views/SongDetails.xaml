@@ -12,6 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
@@ -19,36 +20,40 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0">
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Label Style="{StaticResource LabelStyle}" Name="SongTitle" FontSize="30">SONG TITLE</Label>
+            <Button Template="{StaticResource TogglePlaySongButton}" ></Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0">
+
             <StackPanel Orientation="Horizontal">
                 <Label Style="{StaticResource LabelStyle}" Name="AlbumName">ALBUM</Label>
                 <Label Style="{StaticResource LabelStyle}" Name="ArtistName">ARTIST/S</Label>
-                
+
             </StackPanel>
             <Grid>
-                <Label Style="{StaticResource LabelStyle}" Name="Genre"> NO GENRES</Label>
+                <Label Style="{StaticResource LabelStyle}" Name="Genre">NO GENRES</Label>
                 <control:StarRating Margin="0,0,0,3" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="Rating" UserControlClick="SongRated"></control:StarRating>
             </Grid>
-            
+
         </StackPanel>
         <Button Template="{StaticResource ButtonTemplate}" Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Width="auto" Margin="0,15,0,5" Click="OnBackButtonClick">Back</Button>
-        <StackPanel  Grid.Row="0" Grid.Column="1"  VerticalAlignment="Bottom">
+        <StackPanel  Grid.Row="1" Grid.Column="1"  VerticalAlignment="Bottom">
             <TextBlock Name="AverageScore" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Center" FontSize="20" Opacity="0.7">No Ratings</TextBlock>
             <TextBlock Name="NumberOfRatings" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Center" FontSize="10" Opacity="0.7">(120)</TextBlock>
         </StackPanel>
 
 
-        <TextBox Background="#616161" Margin="5" x:Name="CommentTextBox" Grid.Row="1" Grid.Column="0"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="512">
+        <TextBox Background="#616161" Margin="5" x:Name="CommentTextBox" Grid.Row="2" Grid.Column="0"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="512">
         </TextBox>
-        <TextBlock Name="CharacterCount" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}" Opacity="0.7" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,5,45,5">100</TextBlock>
-        <TextBlock Name="CharacterLimit" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}" Opacity="0.7" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,5">/512 </TextBlock>
+        <TextBlock Name="CharacterCount" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}" Opacity="0.7" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,5,45,5">100</TextBlock>
+        <TextBlock Name="CharacterLimit" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}" Opacity="0.7" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,5">/512</TextBlock>
 
 
 
-        <Button Template="{StaticResource ButtonTemplate}" Click="PostComment" Opacity="0.7" Margin="0,5" VerticalAlignment="Bottom" Grid.Row="1"  Grid.Column="1">Comment</Button>
+        <Button Template="{StaticResource ButtonTemplate}" Click="PostComment" Opacity="0.7" Margin="0,5" VerticalAlignment="Bottom" Grid.Row="2"  Grid.Column="1">Comment</Button>
 
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
@@ -60,7 +65,7 @@
             </ListBox>
             <TextBlock Name="NoCommentsBlock" Margin="5" Grid.Row="1">No Comments</TextBlock>
         </Grid>
-        
+
 
     </Grid>
 </Page>
