@@ -21,14 +21,37 @@
             <control:Favourites Loaded="FavouriteStatus" onUncheck="RemoveArtistsFromFavourites" onCheck="AddArtistToFavourites"/>
         </DataTemplate>
         <DataTemplate x:Key="PlaySong">
-            <Button x:Name="p" Template="{StaticResource TogglePlaySongButton}">
-                <Button.Visibility>
-                    <Binding ElementName="ItemContainer" Path="SelectedItem.IsMouseOver">
-                        
-                    </Binding>
-                </Button.Visibility>
+            <Button x:Name="Play" Template="{StaticResource TogglePlaySongButton}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Visibility" Value="Hidden">
+
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListViewItem}}, Path=IsMouseOver}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
             </Button>
-            
+        </DataTemplate>
+
+        <DataTemplate x:Key="DeleteSong">
+            <Button x:Name="Delete" Click="RemoveFromPlaylistButtonClick" Template="{StaticResource ToggleDeleteButton}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Visibility" Value="Hidden">
+
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListViewItem}}, Path=IsMouseOver}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </DataTemplate>
 
 
@@ -48,11 +71,12 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Template="{StaticResource TextBoxTemplate}" Name="SearchBar" GotFocus="SearchBarGotFocus" LostFocus="SearchBarLostFocus" Grid.Column="1" Grid.Row="0" Padding="5" Margin="5,0,5,0"></TextBox>
-        <Button Template="{StaticResource ToggleSearchButton}" Grid.Column="2" Grid.Row="0" Click="onSearchButtonClick" Padding="5">Search</Button>
+        <TextBox Template="{StaticResource TextBoxTemplate}" Name="SearchBar" GotFocus="SearchBarGotFocus" LostFocus="SearchBarLostFocus" Grid.Column="1" Grid.Row="0" Padding="5" Margin="5,0,5,0" ></TextBox>
+        <Button Template="{StaticResource ToggleSearchButton}" Name="SearchButton" Grid.Column="2" Grid.Row="0" Click="onSearchButtonClick" Padding="5">Search</Button>
 
         <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.ColumnSpan="2" Name="ItemsLabel" FontSize="30" FontWeight="Bold"></Label>
         <Button Name="DeleteButton" Click="OnDeleteButtonClick" Template="{StaticResource ToggleDeleteButton}" Grid.Row="1" Visibility="Hidden" Grid.Column="2"></Button>
+        <Button Name="LogoutButton" Click="OnLogoutButtonClick" Template="{StaticResource ButtonTemplate}" Grid.Row="1" Visibility="Collapsed" Grid.Column="2" Content="Logout" Margin="5" VerticalAlignment="Center"></Button>
 
         <ListView Grid.ColumnSpan="3" Grid.Row="2" Name="ItemsContainer" SelectionChanged="SelectItem" Background="#616161" >
             <ListView.ItemContainerStyle>
