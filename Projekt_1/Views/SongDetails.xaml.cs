@@ -67,7 +67,7 @@ namespace Projekt_1.Views
                         score += rating.Value;
                     }
                     score /= r.Count;
-                    AverageScore.Text = score.ToString();
+                    AverageScore.Text = score.ToString("#.##");
 
                 }
                 List<Comments> comments = db.GetSongComments(song, session);
@@ -180,7 +180,7 @@ namespace Projekt_1.Views
                 sum += yourRating;
                 average = (sum ) / countRatings;
 
-                AverageScore.Text = average.ToString();
+                AverageScore.Text = average.ToString("#.##");
 
                 if (ratingFromDb == null)
                 {
