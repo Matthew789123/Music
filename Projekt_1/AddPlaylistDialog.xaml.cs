@@ -78,5 +78,13 @@ namespace Projekt_1
             Close();
         }
 
+        private void EnterDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                NewPlaylistName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                onCreateClick(sender, e);
+            }
+        }
     }
 }

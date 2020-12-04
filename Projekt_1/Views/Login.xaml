@@ -31,10 +31,10 @@
             </Style>
         </StackPanel.Resources>
 
-        <TextBox Margin="10,10,10,0" Template="{StaticResource TextBoxTemplate}" x:Name="LoginBox" Padding="10" GotFocus="usernameBoxFocused" LostFocus="loginBoxLostFocus" ></TextBox>
+        <TextBox Margin="10,10,10,0" Template="{StaticResource TextBoxTemplate}" x:Name="LoginBox" Padding="10" GotFocus="usernameBoxFocused" LostFocus="loginBoxLostFocus" KeyDown="EnterDown"></TextBox>
         <Grid  Margin="10,10,10,0">
 
-            <PasswordBox Template="{StaticResource PasswordBoxTemplate}" Padding="10" Name="PasswordBox" GotFocus="passwordBoxFocused" LostFocus="passwordBoxLostFocus">
+            <PasswordBox Template="{StaticResource PasswordBoxTemplate}" Padding="10" Name="PasswordBox" GotFocus="passwordBoxFocused" LostFocus="passwordBoxLostFocus" KeyDown="EnterDown">
             </PasswordBox>
             <TextBlock x:Name="PasswordBlock" IsHitTestVisible="False" Padding="10">Password</TextBlock>
             

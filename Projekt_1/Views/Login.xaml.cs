@@ -92,5 +92,12 @@ namespace Projekt_1.Views
                 
         }
 
+        private void EnterDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                OnLoginClick(sender, e);
+            }
+        }
     }
 }

@@ -11,13 +11,13 @@
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
        
         <Label Style="{StaticResource LabelStyle}" HorizontalAlignment="Center" Margin="10,10,10,0" Padding="10" Name="LoginBox">Create new playlist</Label>
-        <TextBox Template="{StaticResource TextBoxTemplate}" Margin="10,0" Name="NewPlaylistName" Padding="10" LostFocus="textBoxLostFocus" GotFocus="textBoxGotFocus"></TextBox>
+        <TextBox Template="{StaticResource TextBoxTemplate}" Margin="10,0" Name="NewPlaylistName" Padding="10" LostFocus="textBoxLostFocus" GotFocus="textBoxGotFocus" KeyDown="EnterDown"></TextBox>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Template="{StaticResource ButtonTemplate}" Grid.Column="0" Margin="90,10,5,10" Padding="5" Width="auto" HorizontalAlignment="Right"  Click="onCreateClick" >Create</Button>
+            <Button Template="{StaticResource ButtonTemplate}" Grid.Column="0" Margin="90,10,5,10" Padding="5" Width="auto" HorizontalAlignment="Right"  Click="onCreateClick" Name="btn">Create</Button>
             <Button Template="{StaticResource ButtonTemplate}" Grid.Column="1" Margin="5,10,90,10" Padding="5" Width="auto" HorizontalAlignment="Left" Click="oncloseClick" >Cancel</Button>
         </Grid>
         
