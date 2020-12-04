@@ -224,7 +224,7 @@ public class AlbumsDisplay : ItemsDisplay
         {
             HeaderContainerStyle = (Style)FindResource("HeaderStyle"),
             Header = "Artists",
-            DisplayMemberBinding = new Binding("artistsToString")
+            DisplayMemberBinding = new Binding("artistsToString"),
         });
         ItemsGrid.Columns.Add(new GridViewColumn
         {
