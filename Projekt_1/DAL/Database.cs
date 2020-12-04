@@ -293,9 +293,12 @@ namespace Projekt_1.DAL
             {
                 session.Update(s);
                 session.Update(p);
-                if (p.songs.Contains(s))
+                foreach (Songs song in p.songs)
                 {
-                    return;
+                    if (song.Id == s.Id)
+                    {
+                        return;
+                    }
                 }
                 s.playlists.Add(p);
                 p.songs.Add(s);
