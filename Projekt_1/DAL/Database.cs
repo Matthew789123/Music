@@ -223,7 +223,7 @@ namespace Projekt_1.DAL
         {
             using(var transaction = session.BeginTransaction())
             {
-                session.Update(r);
+                session.Merge(r);
                 transaction.Commit();
             }
         }

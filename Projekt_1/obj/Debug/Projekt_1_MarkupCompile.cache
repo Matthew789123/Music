@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Test\Desktop\Music\Projekt_1\obj\Debug\
+C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\
 Projekt_1
 none
 false
 DEBUG;TRACE
-C:\Users\Test\Desktop\Music\Projekt_1\App.xaml
+C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\App.xaml
 24609071464
 
 44-667982175
-241807703323
+24257236031
 AddPlaylistDialog.xaml;ChoosePlaylist.xaml;Controls\AddPlaylist.xaml;Controls\AddToPlaylistButton.xaml;Controls\CustomTextBox.xaml;Controls\Favourites.xaml;Controls\LoopButton.xaml;Controls\NoVolumeButton.xaml;Controls\PauseButton.xaml;Controls\PlayButton.xaml;Controls\PlayNextButton.xaml;Controls\PlayPreviousButton.xaml;Controls\QueueButton.xaml;Controls\ShuffleButton.xaml;Controls\StarRating.xaml;Controls\VolumeHighButton.xaml;MainWindow.xaml;scrollbar.xaml;Templates.xaml;Views\Login.xaml;Views\MainView.xaml;Views\Registration.xaml;Views\ItemsDisplay.xaml;Views\SongDetails.xaml;
 
 False

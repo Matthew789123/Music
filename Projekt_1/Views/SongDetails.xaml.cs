@@ -27,7 +27,6 @@ namespace Projekt_1.Views
         private Database db = Database.getInstanece();
         private Songs song;
         private Ratings ratingFromDb;
-        private decimal sum;
         public SongDetails(int song_id)
         {
             InitializeComponent();
@@ -67,7 +66,6 @@ namespace Projekt_1.Views
                     {
                         score += rating.Value;
                     }
-                    sum = score;
                     score /= r.Count;
                     AverageScore.Text = score.ToString();
 
@@ -148,37 +146,42 @@ namespace Projekt_1.Views
 
         private void SongRated(object sender, EventArgs e)
         {
-            char[] charsToTrim = { '(', ')' };
-            int countRatings = Convert.ToInt32(NumberOfRatings.Text.Trim(charsToTrim));
-            decimal average = 0;
-            int yourRating = 0;
-            if (ratingFromDb==null)
+            using (var session = NHibernateHelper.OpenSession())
             {
-               
-                NumberOfRatings.Text = "(" + (Convert.ToInt32(NumberOfRatings.Text.Trim(charsToTrim)) + 1).ToString() + ")";
-                countRatings++;
+                List<Ratings> r = db.GetSongRatings(song, session);
+                int countRatings = r.Count;
+                decimal average = 0;
+                decimal sum = 0;
+                foreach (Ratings rating in r)
+                {
+                    sum += rating.Value;
+                }
+                int yourRating = 0;
+                if (ratingFromDb==null)
+                {
+                    countRatings++;
+                    NumberOfRatings.Text = "(" + countRatings.ToString() + ")";
                 
-            }
-            else
-            {
-                sum -= ratingFromDb.Value;
-            }
-            if (Rating.CheckBox5.IsChecked == true)
-                yourRating = 5;
-            else if (Rating.CheckBox4.IsChecked == true)
-                yourRating = 4;
-            else if (Rating.CheckBox3.IsChecked == true)
-                yourRating = 3;
-            else if (Rating.CheckBox2.IsChecked == true)
-                yourRating = 2;
-            else if (Rating.CheckBox1.IsChecked == true)
-                yourRating = 1;
-            sum += yourRating;
-            average = (sum ) / countRatings;
+                }
+                else
+                {
+                    sum -= ratingFromDb.Value;
+                }
+                if (Rating.CheckBox5.IsChecked == true)
+                    yourRating = 5;
+                else if (Rating.CheckBox4.IsChecked == true)
+                    yourRating = 4;
+                else if (Rating.CheckBox3.IsChecked == true)
+                    yourRating = 3;
+                else if (Rating.CheckBox2.IsChecked == true)
+                    yourRating = 2;
+                else if (Rating.CheckBox1.IsChecked == true)
+                    yourRating = 1;
+                sum += yourRating;
+                average = (sum ) / countRatings;
 
-            AverageScore.Text = average.ToString();
-            using(var session=NHibernateHelper.OpenSession())
-            {
+                AverageScore.Text = average.ToString();
+
                 if (ratingFromDb == null)
                 {
                     ratingFromDb = new Ratings();

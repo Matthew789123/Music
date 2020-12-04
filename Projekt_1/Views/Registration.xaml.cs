@@ -212,6 +212,12 @@ namespace Projekt_1.Views
             return regex.IsMatch(s);
         }
 
-
+        private void EnterDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                onRegisterButtonClick(sender, e);
+            }
+        }
     }
 }
