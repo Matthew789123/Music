@@ -71,7 +71,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Template="{StaticResource TextBoxTemplate}" Name="SearchBar" GotFocus="SearchBarGotFocus" LostFocus="SearchBarLostFocus" Grid.Column="1" Grid.Row="0" Padding="5" Margin="5,0,5,0" ></TextBox>
+        <TextBox Template="{StaticResource TextBoxTemplate}" Name="SearchBar" GotFocus="SearchBarGotFocus" LostFocus="SearchBarLostFocus" Grid.Column="1" Grid.Row="0" Padding="5" Margin="5,0,5,0" KeyDown="EnterDown"></TextBox>
         <Button Template="{StaticResource ToggleSearchButton}" Name="SearchButton" Grid.Column="2" Grid.Row="0" Click="onSearchButtonClick" Padding="5">Search</Button>
 
         <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.ColumnSpan="2" Name="ItemsLabel" FontSize="30" FontWeight="Bold"></Label>

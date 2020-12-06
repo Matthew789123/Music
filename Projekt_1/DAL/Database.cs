@@ -132,7 +132,7 @@ namespace Projekt_1.DAL
             List<Songs> songs = new List<Songs>() ;
             foreach(Songs s in (List<Songs>)session.QueryOver<Songs>().List<Songs>())
             {
-                if(s.Title.Contains(name))
+                if(s.Title.ToLower().Contains(name.ToLower()))
                 {
                     songs.Add(s);
                 }
@@ -145,7 +145,7 @@ namespace Projekt_1.DAL
             List<Artists> artists = new List<Artists>();
             foreach (Artists a in (List<Artists>)session.QueryOver<Artists>().List<Artists>())
             {
-                if (a.Name.Contains(name))
+                if (a.Name.ToLower().Contains(name.ToLower()))
                 {
                     artists.Add(a);
                 }
@@ -158,7 +158,7 @@ namespace Projekt_1.DAL
             List<Albums> albums = new List<Albums>();
             foreach (Albums a in (List<Albums>)session.QueryOver<Albums>().List<Albums>())
             {
-                if (a.Title.Contains(name))
+                if (a.Title.ToLower().Contains(name.ToLower()))
                 {
                     albums.Add(a);
                 }
