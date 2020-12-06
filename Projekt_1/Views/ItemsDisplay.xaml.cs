@@ -98,7 +98,14 @@ namespace Projekt_1.Views
         protected virtual void RemoveFromPlaylistButtonClick(object sender, RoutedEventArgs e) { }
 
         protected virtual void OnLogoutButtonClick(object sender, RoutedEventArgs e) { }
- 
+
+        protected void EnterDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                onSearchButtonClick(sender, e);
+            }
+        }
     }
 }
 
@@ -495,7 +502,7 @@ public class PlaylistDisplay : ItemsDisplay
             MainView view = (MainView)window.MainFrame.Content;
             foreach (Songs s in db.GetSongsFromPlaylist((Playlists)view.PlaylistListBox.SelectedItem, session))
             {
-                if (s.Title.Contains(searchBar))
+                if (s.Title.ToLower().Contains(searchBar.ToLower()))
                 {
                     s.genres.ToString();
                     s.artists.ToString();
