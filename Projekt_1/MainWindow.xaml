@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:Projekt_1"
         mc:Ignorable="d"
         Title="Player" Height="500" Width="850" MinHeight="500" MinWidth="850">
-    <Frame Content="" NavigationUIVisibility="Hidden" Name="MainFrame" />
+    <Frame Content="" NavigationUIVisibility="Hidden" Name="MainFrame"  />
     
 </Window>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,10 +25,15 @@ namespace Projekt_1.Views
     public partial class MainView : Page
     {
         Database db;
-        
+        Thread thread;
+        public static Player player;
         public MainView()
         {
+
             InitializeComponent();
+            player = new Player(this);
+            thread = new Thread(() => MainView.player.threadPlay());
+            thread.Start();
             db = Database.getInstanece();
             using(var session=NHibernateHelper.OpenSession())
             {
@@ -86,6 +92,30 @@ namespace Projekt_1.Views
             ItemsDisplay items = new HomeDisplay();
             ActivityFrame.NavigationService.Navigate(items);
             items.setViewContent();
+        }
+
+        private void timeSkipStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            player.setSliderFlag();
+            player.setPauseFlag();
+        }
+
+        private void timeSkipDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            player.setSliderTime(timeSlider.Value);
+            currentTime.Content = player.sliderTimeValueToString();
+            player.setTime(player.getSliderTime());
+        }
+
+        private void timeSkipEnded(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            player.setSliderFlag();
+            player.setPauseFlag();
+        }
+
+        private void closeMainView(object sender, RoutedEventArgs e)
+        {
+            thread.Abort();
         }
     }
 }

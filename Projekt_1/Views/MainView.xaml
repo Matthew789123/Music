@@ -7,7 +7,7 @@
       xmlns:control = "clr-namespace:Projekt_1.Controls" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainView" >
+      Title="MainView" Unloaded="closeMainView">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -125,9 +125,9 @@
                     Template="{DynamicResource ToggleLoopButton}"/>
 
                 </StackPanel>
-                <Label Style="{StaticResource LabelStyle}" Grid.Row="1" VerticalAlignment="Center">0.00</Label>
-                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center"  Grid.Row="1" Margin="35 0"></Slider>
-                <Label Style="{StaticResource LabelStyle}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">1,11</Label>
+                <Label Name="currentTime" Style="{StaticResource LabelStyle}" Grid.Row="1" VerticalAlignment="Center">0.00</Label>
+                <Slider Name="timeSlider" IsSnapToTickEnabled="True" TickFrequency="1" Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center"  Grid.Row="1" Margin="35 0" Thumb.DragStarted="timeSkipStarted" Thumb.DragDelta="timeSkipDelta" Thumb.DragCompleted="timeSkipEnded"></Slider>
+                <Label Name="maxTime" Style="{StaticResource LabelStyle}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">1,11</Label>
             </Grid>
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="10">
                 <Button
