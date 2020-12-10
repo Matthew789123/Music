@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Label Style="{StaticResource LabelStyle}" Name="SongTitle" FontSize="30">SONG TITLE</Label>
-            <Button Template="{StaticResource TogglePlaySongButton}" ></Button>
+            <Button Template="{StaticResource TogglePlaySongButton}" Click="OnPlayButtonClick"></Button>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0">
 

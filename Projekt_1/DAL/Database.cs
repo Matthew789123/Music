@@ -94,8 +94,6 @@ namespace Projekt_1.DAL
 
         }
 
-
-
         public Boolean usernameTaken(string username, ISession session)
         {
             if(session.QueryOver<Users>().Select(c=> c.Username).List<String>().Contains(username))

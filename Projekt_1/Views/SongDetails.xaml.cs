@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Projekt_1.Models;
 using Projekt_1.NHibernate;
 using Projekt_1.DAL;
+using System.Threading;
 
 namespace Projekt_1.Views
 {
@@ -23,13 +24,13 @@ namespace Projekt_1.Views
     /// </summary>
     public partial class SongDetails : Page
     {
- 
         private Database db = Database.getInstanece();
         private Songs song;
         private Ratings ratingFromDb;
         public SongDetails(int song_id)
         {
             InitializeComponent();
+            
             using(var session=NHibernateHelper.OpenSession())
             {
                 Binding b = new Binding();
@@ -196,6 +197,12 @@ namespace Projekt_1.Views
                 }
             }
 
+        }
+
+        private void OnPlayButtonClick(object sender, RoutedEventArgs e)
+        {
+            MainView.player.setSong(song.Song);
+            
         }
     }
 }
