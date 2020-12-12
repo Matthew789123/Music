@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Projekt_1.Models;
 using Projekt_1.NHibernate;
 using Projekt_1.DAL;
+using System.Threading;
 
 namespace Projekt_1.Views
 {
@@ -23,13 +24,13 @@ namespace Projekt_1.Views
     /// </summary>
     public partial class SongDetails : Page
     {
- 
         private Database db = Database.getInstanece();
         private Songs song;
         private Ratings ratingFromDb;
         public SongDetails(int song_id)
         {
             InitializeComponent();
+            
             using(var session=NHibernateHelper.OpenSession())
             {
                 Binding b = new Binding();
@@ -127,20 +128,24 @@ namespace Projekt_1.Views
 
         private void PostComment(object sender, RoutedEventArgs e)
         {
-            Comments comment;
-            using (var session=NHibernateHelper.OpenSession())
+            if(CommentTextBox.Text!="")
             {
-                comment = new Comments();
+                Comments comment;
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    comment = new Comments();
 
-                comment.Content = CommentTextBox.Text;
-                comment.Post_date = DateTime.Now;
-                comment.Songs_Id = song;
-                db.AddNewComment(comment, session);
+                    comment.Content = CommentTextBox.Text;
+                    comment.Post_date = DateTime.Now;
+                    comment.Songs_Id = song;
+                    db.AddNewComment(comment, session);
+                }
+                string s = comment.Users_Id.Username + " " + comment.Post_date.ToString().Substring(0, 10) + "\n" + comment.Content;
+                CommentTextBox.Text = "";
+                CommentsList.Items.Insert(0, s);
+                NoCommentsBlock.Visibility = Visibility.Collapsed;
             }
-            string s = comment.Users_Id.Username + " " + comment.Post_date.ToString().Substring(0, 10) + "\n" + comment.Content;
-            CommentTextBox.Text = "";
-            CommentsList.Items.Insert(0,s);
-            NoCommentsBlock.Visibility = Visibility.Collapsed;
+            
         }
 
 
@@ -196,6 +201,13 @@ namespace Projekt_1.Views
                 }
             }
 
+        }
+
+        private void OnPlayButtonClick(object sender, RoutedEventArgs e)
+        {
+            MainView.player.setSong(song);
+            MainView.player.setNextSongFlag();
+            
         }
     }
 }

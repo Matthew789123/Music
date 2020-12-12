@@ -7,7 +7,7 @@
       xmlns:control = "clr-namespace:Projekt_1.Controls" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainView" >
+      Title="MainView">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -72,7 +72,7 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Label Style="{StaticResource LabelStyle}" Grid.Column="0" VerticalAlignment="Center">Currently playing</Label>
+            <Label Style="{StaticResource LabelStyle}" Grid.Column="0" VerticalAlignment="Center" Name="currentlyPlayingLabel"></Label>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -86,7 +86,8 @@
                     Height="15"
                     Content="All"
                     Padding="2"
-                    Template="{DynamicResource ToggleShuffleButton}"/>
+                    Template="{DynamicResource ToggleShuffleButton}"
+                        Click="onShuffleButtonClick"/>
 
                     <Button
                     Margin="5"
@@ -95,7 +96,8 @@
                     Height="15"
                     Content="All"
                     Padding="2"
-                    Template="{DynamicResource TogglePlayPreviousButton}"/>
+                    Template="{DynamicResource TogglePlayPreviousButton}"
+                        Click="onPreviousButtonClick"/>
 
                     <Button
                     Margin="5"
@@ -104,7 +106,8 @@
                     Height="30"
                     Content="All"
                     Padding="2"
-                    Template="{StaticResource TogglePlayButton}"/>
+                    Template="{StaticResource TogglePlayButton}"
+                        Click="onPlayButtonClick"/>
 
                     <Button
                     Margin="5"
@@ -113,7 +116,8 @@
                     Height="15"
                     Content="All"
                     Padding="2"
-                    Template="{DynamicResource TogglePlayNextButton}"/>
+                    Template="{DynamicResource TogglePlayNextButton}"
+                        Click="onNextButtonClick"/>
 
                     <Button
                     Margin="5"
@@ -122,12 +126,13 @@
                     Height="15"
                     Content="All"
                     Padding="2"
-                    Template="{DynamicResource ToggleLoopButton}"/>
+                    Template="{DynamicResource ToggleLoopButton}"
+                        Click="onLoopButtonClick"/>
 
                 </StackPanel>
-                <Label Style="{StaticResource LabelStyle}" Grid.Row="1" VerticalAlignment="Center">0.00</Label>
-                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center"  Grid.Row="1" Margin="35 0"></Slider>
-                <Label Style="{StaticResource LabelStyle}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">1,11</Label>
+                <Label Name="currentTime" Style="{StaticResource LabelStyle}" Grid.Row="1" VerticalAlignment="Center">0.00</Label>
+                <Slider Name="timeSlider" IsSnapToTickEnabled="True" TickFrequency="1" Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center"  Grid.Row="1" Margin="35 0" Thumb.DragStarted="timeSkipStarted" Thumb.DragDelta="timeSkipDelta" Thumb.DragCompleted="timeSkipEnded"></Slider>
+                <Label Name="maxTime" Style="{StaticResource LabelStyle}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">1,11</Label>
             </Grid>
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="10">
                 <Button
@@ -147,7 +152,7 @@
                     Padding="2"
                     Template="{DynamicResource ToggleVolumeHighButton}"/>
 
-                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" Maximum="100" Width="100" ></Slider>
+                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" Width="100" Name="volumeSlider" Thumb.DragStarted="volumeChangeStart" Thumb.DragDelta="volumeChangeDelta" Thumb.DragCompleted="volumeChangeComplete" Maximum="1" ></Slider>
 
             </StackPanel>
 
