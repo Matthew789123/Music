@@ -205,9 +205,7 @@ namespace Projekt_1.Views
 
         private void OnPlayButtonClick(object sender, RoutedEventArgs e)
         {
-            MainView.player.setSong(song);
-            MainView.player.setNextSongFlag();
-            
+            MainView.player.setSong(song); 
         }
     }
 }
