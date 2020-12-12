@@ -26,6 +26,7 @@ namespace Projekt_1.Views
     {
         Database db;
         Thread thread;
+        
         public static Player player;
         public MainView()
         {
@@ -33,6 +34,7 @@ namespace Projekt_1.Views
             InitializeComponent();
             player = new Player(this);
             thread = new Thread(() => MainView.player.threadPlay());
+            thread.IsBackground = true;
             thread.Start();
             db = Database.getInstanece();
             using(var session=NHibernateHelper.OpenSession())
@@ -79,7 +81,6 @@ namespace Projekt_1.Views
         private void playlistSelected(object sender, SelectionChangedEventArgs e)
         {
             ListBox box = (ListBox)sender;
-          
             if (box.SelectedItem == null)
                 return;
             ItemsDisplay items = new PlaylistDisplay();
@@ -113,9 +114,46 @@ namespace Projekt_1.Views
             player.setPauseFlag();
         }
 
-        private void closeMainView(object sender, RoutedEventArgs e)
+        private void onPlayButtonClick(object sender, RoutedEventArgs e)
         {
-            thread.Abort();
+            player.setPauseFlag();
+        }
+
+        private void onPreviousButtonClick(object sender, RoutedEventArgs e)
+        {
+
+            player.setPreviousSongFlag();
+        }
+
+        private void onShuffleButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void onNextButtonClick(object sender, RoutedEventArgs e)
+        {
+            player.setNextSongFlag();
+            
+        }
+
+        private void onLoopButtonClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void volumeChangeStart(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            player.setVolume((float)volumeSlider.Value);
+        }
+
+        private void volumeChangeDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            player.setVolume((float)volumeSlider.Value);
+        }
+
+        private void volumeChangeComplete(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            player.setVolume((float)volumeSlider.Value);
         }
     }
 }

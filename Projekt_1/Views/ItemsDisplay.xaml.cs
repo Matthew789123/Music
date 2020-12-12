@@ -29,6 +29,7 @@ namespace Projekt_1.Views
     public abstract partial class ItemsDisplay : Page
     {
         protected Database db;
+        protected List<Songs> playlistToPlayer;
         public string searchBar { get; set; }
         public ItemsDisplay()
         {
@@ -106,6 +107,9 @@ namespace Projekt_1.Views
                 onSearchButtonClick(sender, e);
             }
         }
+
+        protected virtual void onPlayButtonClick(object sender, RoutedEventArgs e) { }
+      
     }
 }
 
@@ -421,7 +425,15 @@ public class SongsDisplay : ItemsDisplay
         dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         dlg.ShowDialog();
         dlg.Owner = null;
+    }
 
+    protected override void onPlayButtonClick(object sender, RoutedEventArgs e)
+    {
+        MainWindow window = (MainWindow)Application.Current.MainWindow;
+        MainView view = (MainView)window.MainFrame.Content;
+        Button bt = (Button)sender;
+        Songs s = (Songs)bt.DataContext;
+        MainView.player.setSong(s);
     }
 
 }
@@ -482,15 +494,21 @@ public class PlaylistDisplay : ItemsDisplay
             MainWindow view = (MainWindow)Application.Current.MainWindow;
             MainView view2 = (MainView)view.MainFrame.Content;
             Playlists pl = (Playlists)view2.PlaylistListBox.SelectedItem;
+            playlistToPlayer = new List<Songs>();
             if (pl.Name == "Your Favourites")
                 DeleteButton.Visibility = Visibility.Hidden;
             foreach (Songs s in db.GetSongsFromPlaylist(pl, session))
             {
                 s.genres.ToString();
                 s.artists.ToString();
-
+                playlistToPlayer.Add(s);
                 ItemsContainer.Items.Add(s);
             }
+            if(MainView.player.getPlayingFlag()==true)
+            {
+                MainView.player.setPlayingFlag();
+            }
+            MainView.player.setPlaylist(playlistToPlayer);
         }
     }
 
@@ -520,6 +538,7 @@ public class PlaylistDisplay : ItemsDisplay
         SongDetails detail = new SongDetails(s.Id);
         MainView view = (MainView)window.MainFrame.Content;
         view.ActivityFrame.Navigate(detail);
+        
     }
 
     protected override void OnDeleteButtonClick(object sender, RoutedEventArgs e)
@@ -563,11 +582,22 @@ public class PlaylistDisplay : ItemsDisplay
             db.RemoveSongFromPlaylist(s,playlist, session);
         }
         ItemsContainer.Items.Remove(s);
-        
-
     }
 
+    protected override void onPlayButtonClick(object sender, RoutedEventArgs e)
+    {
+        MainWindow window = (MainWindow)Application.Current.MainWindow;
+        MainView view = (MainView)window.MainFrame.Content;
+        Playlists playlist = (Playlists)view.PlaylistListBox.SelectedItem;
+        Button bt = (Button)sender;
+        Songs s = (Songs)bt.DataContext;
 
+
+        MainView.player.setCurrentSong(s);
+        MainView.player.setSong(s);
+        
+        
+    }
 }
 
 public class HomeDisplay:ItemsDisplay

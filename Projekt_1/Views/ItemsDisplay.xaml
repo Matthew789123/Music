@@ -21,7 +21,7 @@
             <control:Favourites Loaded="FavouriteStatus" onUncheck="RemoveArtistsFromFavourites" onCheck="AddArtistToFavourites"/>
         </DataTemplate>
         <DataTemplate x:Key="PlaySong">
-            <Button x:Name="Play" Template="{StaticResource TogglePlaySongButton}">
+            <Button x:Name="Play" Template="{StaticResource TogglePlaySongButton}" Click="onPlayButtonClick">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Visibility" Value="Hidden">
