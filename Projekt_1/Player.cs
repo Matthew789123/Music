@@ -30,10 +30,7 @@ namespace Projekt_1
         private Songs song = null;
 
 
-        string uri="";
-
-
-       public Player(MainView view)
+        public Player(MainView view)
         {
             this.view = view;
             
@@ -266,7 +263,8 @@ namespace Projekt_1
                             }
                             if (!isPaused)
                             {
-                                waveOut.Play();
+                                if(waveOut.PlaybackState!=PlaybackState.Stopped)
+                                    waveOut.Play();
                                 view.Dispatcher.Invoke(() =>
                                 {
                                     view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
@@ -281,15 +279,8 @@ namespace Projekt_1
                             Thread.Sleep(100);
                         }
                     }
-
                 }
             }
-
-
-
-
         }
-
     }
-
 }
