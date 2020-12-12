@@ -18,7 +18,7 @@ namespace Projekt_1
         private MainView view;
         private bool isPlaying = false;
         private bool isPaused = false;
-        private bool isLooped = true;
+        private bool isLooped = false;
         private bool nextSong = false;
         private bool previousSong = false;
         private int counter = 0;
@@ -122,9 +122,7 @@ namespace Projekt_1
             {
                 currnetSong = songs.IndexOf(s);
                 song = s;
-            }
-                
-            
+            }   
         }
 
 
@@ -261,6 +259,14 @@ namespace Projekt_1
                                     blockAlignedStream.CurrentTime = TimeSpan.Zero;
                                 }
                             }
+                            if(!isLooped && songs.Count>1 && ms.Position >= ms.Length)
+                            {
+                                counter = (counter + 1) % songs.Count;
+                                isPlaying = false;
+                                setNextSongFlag();
+                            }
+
+
                             if (!isPaused)
                             {
                                 if(waveOut.PlaybackState!=PlaybackState.Stopped)

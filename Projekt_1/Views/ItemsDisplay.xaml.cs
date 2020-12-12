@@ -66,10 +66,12 @@ namespace Projekt_1.Views
 
         protected void onSearchButtonClick(object sender, RoutedEventArgs e)
         {
- 
+
             SearchBar.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            if(SearchBar.Text =="Search")
+            if (SearchBar.Text == "Search" && SearchBar.IsFocused == false)
             {
+                ItemsContainer.Items.Clear();
+                setViewContent();
                 return;
             }
             ItemsContainer.Items.Clear();
@@ -592,7 +594,7 @@ public class PlaylistDisplay : ItemsDisplay
         Button bt = (Button)sender;
         Songs s = (Songs)bt.DataContext;
 
-
+        MainView.player.setPlayingFlag();
         MainView.player.setCurrentSong(s);
         MainView.player.setSong(s);
         
