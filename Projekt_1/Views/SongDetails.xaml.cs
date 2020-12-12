@@ -128,20 +128,24 @@ namespace Projekt_1.Views
 
         private void PostComment(object sender, RoutedEventArgs e)
         {
-            Comments comment;
-            using (var session=NHibernateHelper.OpenSession())
+            if(CommentTextBox.Text!="")
             {
-                comment = new Comments();
+                Comments comment;
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    comment = new Comments();
 
-                comment.Content = CommentTextBox.Text;
-                comment.Post_date = DateTime.Now;
-                comment.Songs_Id = song;
-                db.AddNewComment(comment, session);
+                    comment.Content = CommentTextBox.Text;
+                    comment.Post_date = DateTime.Now;
+                    comment.Songs_Id = song;
+                    db.AddNewComment(comment, session);
+                }
+                string s = comment.Users_Id.Username + " " + comment.Post_date.ToString().Substring(0, 10) + "\n" + comment.Content;
+                CommentTextBox.Text = "";
+                CommentsList.Items.Insert(0, s);
+                NoCommentsBlock.Visibility = Visibility.Collapsed;
             }
-            string s = comment.Users_Id.Username + " " + comment.Post_date.ToString().Substring(0, 10) + "\n" + comment.Content;
-            CommentTextBox.Text = "";
-            CommentsList.Items.Insert(0,s);
-            NoCommentsBlock.Visibility = Visibility.Collapsed;
+            
         }
 
 
@@ -201,7 +205,8 @@ namespace Projekt_1.Views
 
         private void OnPlayButtonClick(object sender, RoutedEventArgs e)
         {
-            MainView.player.setSong(song.Song);
+            MainView.player.setSong(song);
+            MainView.player.setNextSongFlag();
             
         }
     }

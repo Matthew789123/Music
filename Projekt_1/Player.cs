@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Projekt_1.Views;
+using Projekt_1.Models;
+
 namespace Projekt_1
 {
     public class Player
     {
         private WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());
-        private AudioFileReader audioOut;
         private MainView view;
         private bool isPlaying = false;
         private bool isPaused = false;
@@ -24,7 +25,13 @@ namespace Projekt_1
         private double sliderTime;
         private TimeSpan time;
         private bool slide = false;
-        string uri;
+        private int currnetSong=0;
+        private List<Songs> songs=new List<Songs>();
+        private Songs song = null;
+
+
+        string uri="";
+
 
        public Player(MainView view)
         {
@@ -32,10 +39,22 @@ namespace Projekt_1
             
         }
 
-        public void setSong(string uri)
+        public void setSong(Songs song)
         {
-            this.uri = uri;
+            if(isPlaying==true)
+            {
+                waveOut.Stop();
+                isPlaying = false;
+            }
+            this.song = song;
         }
+
+
+        public void setPlaylist(List<Songs> songs)
+        {
+            this.songs = songs;
+        }
+
 
         public void setPlayingFlag()
         {
@@ -58,6 +77,11 @@ namespace Projekt_1
             sliderTime = value;
         }
 
+        public void setLoopFlag()
+        {
+            isLooped = !isLooped;
+        }
+
         public TimeSpan getSliderTime()
         {
             return TimeSpan.FromSeconds(sliderTime);
@@ -67,6 +91,11 @@ namespace Projekt_1
             time = span;
         }
 
+
+        public void emptyPlaylist()
+        {
+            songs.Clear();
+        }
         public string sliderTimeValueToString()
         {
             return Convert.ToString(TimeSpan.FromSeconds(sliderTime)).Substring(3);
@@ -78,23 +107,59 @@ namespace Projekt_1
         }
 
 
+        public void setNextSongFlag()
+        {
+           
+            nextSong = !nextSong;
+        }
+
+        public void setPreviousSongFlag()
+        {
+            previousSong = !previousSong;
+        }
+
+
+        public void setCurrentSong(Songs s)
+        {
+            if (songs.Contains(s))
+            {
+                currnetSong = songs.IndexOf(s);
+                song = s;
+            }
+                
+            
+        }
+
+
+        public void setVolume(float value)
+        {
+            waveOut.Volume = value;
+        }
+
 
         public void threadPlay()
         {
-            while(true)
+            waveOut.Volume = 0.50f;
+            view.Dispatcher.Invoke(() =>
+            {
+                view.volumeSlider.Value = waveOut.Volume;
+
+            });
+            while (true)
             {
                 play();
                 Thread.Sleep(100);
             }
         }
 
-
-
         private void initialize(Stream ms)
         {
-            using (Stream stream = WebRequest.Create(uri)
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            
+            using (Stream stream = WebRequest.Create(song.Song)
                        .GetResponse().GetResponseStream())
             {
+                
                 byte[] buffer = new byte[32768];
                 int read;
                 while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
@@ -103,9 +168,11 @@ namespace Projekt_1
                 }
             }
         }
+
+
         public void play()
         {
-            if (uri != null)
+            if (song!=null)
             {
                 using (Stream ms = new MemoryStream())
                 {
@@ -120,7 +187,12 @@ namespace Projekt_1
                            WaveFormatConversionStream.CreatePcmStream(
                                new Mp3FileReader(ms))))
                     {
-                        
+                        view.Dispatcher.Invoke(() =>
+                        {
+                            view.currentlyPlayingLabel.Content = song.Title;
+                           
+                        });
+
                         if (!isPlaying)
                         {
                             isPlaying = true;
@@ -157,17 +229,39 @@ namespace Projekt_1
 
                             if (nextSong)
                             {
-                                nextSong = false;
-                                waveOut.Stop();
-                                isPlaying = false;
-                                //podac nowy linkdp inicjalizacji
-                                play();
+                                if (songs != null && songs.Count!=0)
+                                {
+                                    currnetSong = (currnetSong + 1) % songs.Count;
+                                    nextSong = false;
+                                    waveOut.Stop(); 
+                                    isPlaying = false;
+                                    song = songs[currnetSong];
+                                    play();
+                                }
                             }
+
+                            if (previousSong)
+                            {
+                                if (songs != null && songs.Count != 0)
+                                {
+                                    currnetSong = currnetSong - 1;
+                                    if (currnetSong < 0)
+                                        currnetSong = songs.Count-1;
+                                    previousSong = false;
+                                    waveOut.Stop();
+                                    isPlaying = false;
+                                    song = songs[currnetSong];
+                                    play();
+                                }
+
+                            }
+
                             if (isLooped)
                             {
                                 if (ms.Position >= ms.Length)
                                 {
                                     ms.Position = 0;
+                                    blockAlignedStream.CurrentTime = TimeSpan.Zero;
                                 }
                             }
                             if (!isPaused)
