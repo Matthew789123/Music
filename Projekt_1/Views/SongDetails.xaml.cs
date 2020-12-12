@@ -205,7 +205,9 @@ namespace Projekt_1.Views
 
         private void OnPlayButtonClick(object sender, RoutedEventArgs e)
         {
-            MainView.player.setSong(song); 
+            List<Songs> s = new List<Songs>();
+            s.Add(song);
+            MainView.player.setSongs(s); 
         }
     }
 }

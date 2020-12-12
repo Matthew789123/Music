@@ -183,3 +183,5 @@ C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\Controls\ShuffleB
 C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\Controls\VolumeHighButton.baml
 C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\scrollbar.baml
 C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\obj\Debug\Templates.baml
+C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\bin\Debug\NAudio.dll
+C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\bin\Debug\NAudio.xml

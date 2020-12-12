@@ -435,7 +435,9 @@ public class SongsDisplay : ItemsDisplay
         MainView view = (MainView)window.MainFrame.Content;
         Button bt = (Button)sender;
         Songs s = (Songs)bt.DataContext;
-        MainView.player.setSong(s);
+        List<Songs> songs = new List<Songs>();
+        songs.Add(s);
+        MainView.player.setSongs(songs);
     }
 
 }
@@ -506,11 +508,7 @@ public class PlaylistDisplay : ItemsDisplay
                 playlistToPlayer.Add(s);
                 ItemsContainer.Items.Add(s);
             }
-            if(MainView.player.getPlayingFlag()==true)
-            {
-                MainView.player.setPlayingFlag();
-            }
-            MainView.player.setPlaylist(playlistToPlayer);
+            MainView.player.setSongs(playlistToPlayer);
         }
     }
 
@@ -594,9 +592,9 @@ public class PlaylistDisplay : ItemsDisplay
         Button bt = (Button)sender;
         Songs s = (Songs)bt.DataContext;
 
-        MainView.player.setPlayingFlag();
-        MainView.player.setCurrentSong(s);
-        MainView.player.setSong(s);
+        List<Songs> songs = new List<Songs>();
+        songs.Add(s);
+        MainView.player.setSongs(songs);
         
         
     }

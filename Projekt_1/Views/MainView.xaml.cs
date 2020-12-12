@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -97,77 +98,57 @@ namespace Projekt_1.Views
 
         private void timeSkipStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
-            player.setSliderFlag();
-            player.setPauseFlag();
+            player.isSliding = true;
+            player.isPaused = true;
         }
 
         private void timeSkipDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            player.setSliderTime(timeSlider.Value);
-            currentTime.Content = player.sliderTimeValueToString();
-            player.setTime(player.getSliderTime());
+            player.time = timeSlider.Value;
         }
 
         private void timeSkipEnded(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            player.setSliderFlag();
-            player.setPauseFlag();
+            player.isSliding = false;
+            player.isPaused = false;
         }
 
         private void onPlayButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setPauseFlag();
+            player.isPaused = !player.isPaused;
         }
 
         private void onPreviousButtonClick(object sender, RoutedEventArgs e)
         {
-
-            player.setPreviousSongFlag();
         }
 
         private void onShuffleButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setShuffleFlag();
         }
 
         private void onNextButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setNextSongFlag();
             
         }
 
         private void onLoopButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setLoopFlag();
         }
 
         private void volumeChangeStart(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
-            player.setVolume((float)volumeSlider.Value);
         }
 
         private void volumeChangeDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            player.setVolume((float)volumeSlider.Value);
         }
 
         private void volumeChangeComplete(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            player.setVolume((float)volumeSlider.Value);
         }
 
         private void onVolumeButtonClick(object sender, RoutedEventArgs e)
         {
-            if(player.getVolume()==0f)
-            {
-                player.setVolume(1f);
-                volumeSlider.Value = 1;
-            }
-            else
-            {
-                player.setVolume(0f);
-                volumeSlider.Value = 0;
-            }
         }
     }
 }
