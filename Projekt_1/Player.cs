@@ -21,6 +21,7 @@ namespace Projekt_1
         private bool isLooped = false;
         private bool nextSong = false;
         private bool previousSong = false;
+        private bool shuffle = false;
         private int counter = 0;
         private double sliderTime;
         private TimeSpan time;
@@ -28,12 +29,28 @@ namespace Projekt_1
         private int currnetSong=0;
         private List<Songs> songs=new List<Songs>();
         private Songs song = null;
-
+        private Random random = new Random();
+        int i = 0;
 
         public Player(MainView view)
         {
             this.view = view;
             
+        }
+
+        public void setShuffleFlag()
+        {
+            shuffle = !shuffle;
+        }
+
+        public bool getShuffleFlag()
+        {
+            return shuffle;
+        }
+
+        public bool getLoopFlag()
+        {
+            return isLooped;
         }
 
         public void setSong(Songs song)
@@ -46,6 +63,11 @@ namespace Projekt_1
             this.song = song;
         }
 
+
+        public float getVolume()
+        {
+            return (float)waveOut.Volume;
+        }
 
         public void setPlaylist(List<Songs> songs)
         {
@@ -67,8 +89,6 @@ namespace Projekt_1
         {
             isPaused = !isPaused;
         }
-
-
         public void setSliderTime( double value)
         {
             sliderTime = value;
@@ -171,6 +191,35 @@ namespace Projekt_1
             {
                 using (Stream ms = new MemoryStream())
                 {
+                    if (nextSong)
+                    {
+                        if (songs != null && songs.Count != 0)
+                        {
+                            currnetSong = (currnetSong + 1) % songs.Count;
+                            nextSong = false;
+                            waveOut.Stop();
+                            song = songs[currnetSong];
+
+
+                        }
+                    }
+
+                    if (previousSong)
+                    {
+                        if (songs != null && songs.Count != 0)
+                        {
+                            currnetSong = currnetSong - 1;
+                            if (currnetSong < 0)
+                                currnetSong = songs.Count - 1;
+                            previousSong = false;
+                            waveOut.Stop();
+                            song = songs[currnetSong];
+
+                        }
+
+                    }
+
+
                     initialize(ms);
 
                     long c = ms.Length;
@@ -190,6 +239,7 @@ namespace Projekt_1
 
                         if (!isPlaying)
                         {
+                            
                             isPlaying = true;
                             view.Dispatcher.Invoke(() =>
                                 {
@@ -209,6 +259,8 @@ namespace Projekt_1
 
                         }
 
+                        
+
                         while (waveOut.PlaybackState == PlaybackState.Playing || waveOut.PlaybackState == PlaybackState.Paused)
                         {
                             if (slide)
@@ -217,37 +269,7 @@ namespace Projekt_1
                                 view.Dispatcher.Invoke(() =>
                                 {
                                     blockAlignedStream.CurrentTime = time;
-
                                 });
-
-                            }
-
-                            if (nextSong)
-                            {
-                                if (songs != null && songs.Count!=0)
-                                {
-                                    currnetSong = (currnetSong + 1) % songs.Count;
-                                    nextSong = false;
-                                    waveOut.Stop(); 
-                                    isPlaying = false;
-                                    song = songs[currnetSong];
-                                    play();
-                                }
-                            }
-
-                            if (previousSong)
-                            {
-                                if (songs != null && songs.Count != 0)
-                                {
-                                    currnetSong = currnetSong - 1;
-                                    if (currnetSong < 0)
-                                        currnetSong = songs.Count-1;
-                                    previousSong = false;
-                                    waveOut.Stop();
-                                    isPlaying = false;
-                                    song = songs[currnetSong];
-                                    play();
-                                }
 
                             }
 
@@ -264,8 +286,14 @@ namespace Projekt_1
                                 counter = (counter + 1) % songs.Count;
                                 isPlaying = false;
                                 setNextSongFlag();
+                                break;
                             }
 
+                            if((nextSong || previousSong) && isPlaying)
+                            {
+                                isPlaying = false;
+                                break;
+                            }
 
                             if (!isPaused)
                             {

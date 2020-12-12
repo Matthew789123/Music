@@ -127,7 +127,7 @@ namespace Projekt_1.Views
 
         private void onShuffleButtonClick(object sender, RoutedEventArgs e)
         {
-
+            player.setShuffleFlag();
         }
 
         private void onNextButtonClick(object sender, RoutedEventArgs e)
@@ -138,7 +138,7 @@ namespace Projekt_1.Views
 
         private void onLoopButtonClick(object sender, RoutedEventArgs e)
         {
-            
+            player.setLoopFlag();
         }
 
         private void volumeChangeStart(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
@@ -154,6 +154,20 @@ namespace Projekt_1.Views
         private void volumeChangeComplete(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             player.setVolume((float)volumeSlider.Value);
+        }
+
+        private void onVolumeButtonClick(object sender, RoutedEventArgs e)
+        {
+            if(player.getVolume()==0f)
+            {
+                player.setVolume(1f);
+                volumeSlider.Value = 1;
+            }
+            else
+            {
+                player.setVolume(0f);
+                volumeSlider.Value = 0;
+            }
         }
     }
 }
