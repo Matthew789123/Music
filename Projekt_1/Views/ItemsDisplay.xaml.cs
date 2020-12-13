@@ -593,6 +593,7 @@ public class PlaylistDisplay : ItemsDisplay
 
         MainView.player.setSongs(playlistToPlayer);
         MainView.player.toPlay = s;
+        MainView.player.currentPlaylist = playlist;
 
 
     }

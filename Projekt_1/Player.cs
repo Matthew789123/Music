@@ -23,6 +23,7 @@ namespace Projekt_1
         private TimeSpan time;
         public WaveOut waveOut = new WaveOut();
         public Songs toPlay = null;
+        public Playlists currentPlaylist = null;
 
         public Player(MainView view)
         {
