@@ -115,10 +115,7 @@ namespace Projekt_1.Views
                             break;
                     }
                 }
-               
-                
             }
-   
         }
 
         private void OnBackButtonClick(object sender, RoutedEventArgs e)

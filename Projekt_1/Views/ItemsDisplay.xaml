@@ -9,6 +9,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SongsView"
         Unloaded="onUnloaded"
+      
       >
     <Page.Resources>
         <DataTemplate x:Key="AddToPlaylistButton">

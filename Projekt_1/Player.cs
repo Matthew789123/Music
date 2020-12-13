@@ -125,7 +125,7 @@ namespace Projekt_1
                         });
                         waveOut.Init(blockAlignedStream);
                         waveOut.Play();
-                        while (waveOut.PlaybackState == PlaybackState.Playing && blockAlignedStream.CurrentTime <= blockAlignedStream.TotalTime) 
+                        while (waveOut.PlaybackState == PlaybackState.Playing) 
                         {
                             while (isPaused)
                             {
@@ -135,7 +135,6 @@ namespace Projekt_1
                                 {
                                     view.Dispatcher.Invoke(() =>
                                     {
-                                        
                                             blockAlignedStream.CurrentTime = time;
                                     });
                                 }
@@ -192,7 +191,7 @@ namespace Projekt_1
                 {
                     int j = i;
                     Random rnd = new Random();
-                    while (i == j)
+                    while (i == j-1)
                         i = rnd.Next(-1, songs.Count - 2);
                 }
             }

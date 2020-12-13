@@ -136,10 +136,12 @@ namespace Projekt_1.Views
         private void onShuffleButtonClick(object sender, RoutedEventArgs e)
         {
             player.shuffle = !player.shuffle;
-            player.loop = false;
+            
             if (player.shuffle)
             {
+                player.loop = false;
                 Shuffle.Template = FindResource("ToggleShuffleHighLightButton") as ControlTemplate;
+                Loop.Template = FindResource("ToggleLoopButton") as ControlTemplate;
             }
             else
                 Shuffle.Template = FindResource("ToggleShuffleButton") as ControlTemplate;
@@ -153,10 +155,12 @@ namespace Projekt_1.Views
         private void onLoopButtonClick(object sender, RoutedEventArgs e)
         {
             player.loop = !player.loop;
-            player.shuffle = false;
+           
             if(player.loop)
             {
+                player.shuffle = false;
                 Loop.Template = FindResource("ToggleLoopHighLightButton") as ControlTemplate;
+                Shuffle.Template = FindResource("ToggleShuffleButton") as ControlTemplate;
             }
             else
                 Loop.Template = FindResource("ToggleLoopButton") as ControlTemplate;
