@@ -56,6 +56,8 @@ namespace Projekt_1
             {
 
                 db.AddSongToPlaylist(s, (Playlists)PlaylistsCombo.SelectedItem, session);
+                if (MainView.player.currentPlaylist == (Playlists)PlaylistsCombo.SelectedItem)
+                    MainView.player.getSongs().Insert(((Playlists)PlaylistsCombo.SelectedItem).songs.IndexOf(s), s);
             }
             Close();
         }

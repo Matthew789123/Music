@@ -37,6 +37,11 @@ namespace Projekt_1
             return TimeSpan.FromSeconds(sliderTime);
         }
 
+        public List<Songs> getSongs()
+        {
+            return songs;
+        }
+
         public void setTime(TimeSpan span)
         {
             time = span;
@@ -189,10 +194,12 @@ namespace Projekt_1
                 }
                 if (shuffle == true && songs.Count != 1)
                 {
-                    int j = i;
+                    int j = i - 1;
                     Random rnd = new Random();
-                    while (i == j)
+                    do
+                    {
                         i = rnd.Next(-1, songs.Count - 2);
+                    } while (i - 1 == j);
                 }
             }
             isPaused = true;
