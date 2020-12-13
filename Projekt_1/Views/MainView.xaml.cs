@@ -103,6 +103,12 @@ namespace Projekt_1.Views
 
         private void timeSkipDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
+            player.setSliderTime(timeSlider.Value);
+            currentTime.Content = player.sliderTimeValueToString();
+            player.setTime(player.getSliderTime());
+
+
+
         }
 
         private void timeSkipEnded(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -114,6 +120,12 @@ namespace Projekt_1.Views
         private void onPlayButtonClick(object sender, RoutedEventArgs e)
         {
             player.isPaused = !player.isPaused;
+            if(player.isPaused==false)
+            {
+                Play.Template = FindResource("TogglePauseButton") as ControlTemplate;
+            }
+            else
+                Play.Template = FindResource("TogglePlayButton") as ControlTemplate;
         }
 
         private void onPreviousButtonClick(object sender, RoutedEventArgs e)
@@ -124,6 +136,12 @@ namespace Projekt_1.Views
         private void onShuffleButtonClick(object sender, RoutedEventArgs e)
         {
             player.shuffle = !player.shuffle;
+            if (player.shuffle)
+            {
+                Shuffle.Template = FindResource("ToggleShuffleHighLightButton") as ControlTemplate;
+            }
+            else
+                Shuffle.Template = FindResource("ToggleShuffleButton") as ControlTemplate;
         }
 
         private void onNextButtonClick(object sender, RoutedEventArgs e)
@@ -134,6 +152,12 @@ namespace Projekt_1.Views
         private void onLoopButtonClick(object sender, RoutedEventArgs e)
         {
             player.loop = !player.loop;
+            if(player.loop)
+            {
+                Loop.Template = FindResource("ToggleLoopHighLightButton") as ControlTemplate;
+            }
+            else
+                Loop.Template = FindResource("ToggleLoopButton") as ControlTemplate;
         }
 
         private void volumeChangeStart(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
@@ -143,10 +167,12 @@ namespace Projekt_1.Views
         private void volumeChangeDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
             player.setVolume((float)volumeSlider.Value);
-        }
-
-        private void volumeChangeComplete(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-        {
+            if(volumeSlider.Value==0f)
+            {
+                Volume.Template = FindResource("ToggleNoVolumeButton") as ControlTemplate;
+            }
+            else
+                Volume.Template = FindResource("ToggleVolumeHighButton") as ControlTemplate;
         }
 
         private void onVolumeButtonClick(object sender, RoutedEventArgs e)
@@ -155,11 +181,13 @@ namespace Projekt_1.Views
             {
                 volumeSlider.Value = 0;
                 player.setVolume(0);
+                Volume.Template = FindResource("ToggleNoVolumeButton") as ControlTemplate;
             }
             else
             {
                 volumeSlider.Value = 0.5;
                 player.setVolume(0.5F);
+                Volume.Template = FindResource("ToggleVolumeHighButton") as ControlTemplate;
             }
         }
     }

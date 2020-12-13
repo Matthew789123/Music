@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Projekt_1.Views;
 using Projekt_1.Models;
-using System.Windows.Forms;
+using System.Windows.Controls;
 
 namespace Projekt_1
 {
@@ -19,7 +19,8 @@ namespace Projekt_1
         private MainView view;
         private List<Songs> songs;
         public Boolean isPaused = false, isSliding = false, reset = false, volumeChange = false, next = false, previous = false, loop = false, shuffle = false;
-        private double time;
+        private double sliderTime;
+        private TimeSpan time;
         public WaveOut waveOut = new WaveOut();
         public Songs toPlay = null;
 
@@ -28,6 +29,26 @@ namespace Projekt_1
             this.view = view;
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             waveOut.Volume = 0.5F;
+        }
+
+        public TimeSpan getSliderTime()
+        {
+            return TimeSpan.FromSeconds(sliderTime);
+        }
+
+        public void setTime(TimeSpan span)
+        {
+            time = span;
+        }
+
+        public void setSliderTime(double value)
+        {
+            sliderTime = value;
+        }
+
+        public string sliderTimeValueToString()
+        {
+            return Convert.ToString(TimeSpan.FromSeconds(sliderTime)).Substring(3);
         }
 
         public void setSongs(List<Songs> songs)
@@ -56,12 +77,25 @@ namespace Projekt_1
         {
             if (songs == null)
                 return;
-
+            if(!isPaused)
+            {
+                view.Dispatcher.Invoke(() => {
+                    view.Play.Template = this.view.FindResource("TogglePauseButton") as ControlTemplate;
+                });
+            }
+            else
+            {
+                view.Dispatcher.Invoke(() => {
+                    view.Play.Template = this.view.FindResource("TogglePlayButton") as ControlTemplate;
+                });
+            }
+            
             int i = songs.IndexOf(toPlay);
             for (; i < songs.Count; i++)
             {
                 Songs s = songs[i];
                 view.Dispatcher.Invoke(() => view.currentlyPlayingLabel.Content = s.Title);
+
                 using (Stream ms = new MemoryStream())
                 {
                     using (Stream stream = WebRequest.Create(s.Song)
@@ -100,11 +134,7 @@ namespace Projekt_1
                                 {
                                     view.Dispatcher.Invoke(() =>
                                     {
-                                        time = view.timeSlider.Value;
-                                        if (time > blockAlignedStream.TotalTime.TotalSeconds)
-                                            time = blockAlignedStream.TotalTime.TotalSeconds;
-                                        blockAlignedStream.CurrentTime = TimeSpan.FromSeconds(time);
-                                        view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
+                                        blockAlignedStream.CurrentTime = time;
                                     });
                                 }
                                 if (next == true || previous == true)
@@ -121,6 +151,10 @@ namespace Projekt_1
                             if (next == true)
                             {
                                 next = false;
+                                if (waveOut.PlaybackState == PlaybackState.Paused)
+                                    isPaused = true;
+                                else
+                                    isPaused = false;
                                 break;
                             }
                             if (previous == true)
@@ -129,6 +163,10 @@ namespace Projekt_1
                                 i -= 2;
                                 if (i < -1)
                                     i = -1;
+                                if (waveOut.PlaybackState == PlaybackState.Paused)
+                                    isPaused = true;
+                                else
+                                    isPaused = false;
                                 break;
                             }
                             if (waveOut.PlaybackState == PlaybackState.Paused)
@@ -157,6 +195,7 @@ namespace Projekt_1
                 }
             }
             isPaused = true;
+
             toPlay = songs[0];
         }
 
