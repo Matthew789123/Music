@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -104,7 +103,6 @@ namespace Projekt_1.Views
 
         private void timeSkipDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            player.time = timeSlider.Value;
         }
 
         private void timeSkipEnded(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -120,6 +118,7 @@ namespace Projekt_1.Views
 
         private void onPreviousButtonClick(object sender, RoutedEventArgs e)
         {
+            player.previous = true;
         }
 
         private void onShuffleButtonClick(object sender, RoutedEventArgs e)
@@ -128,7 +127,7 @@ namespace Projekt_1.Views
 
         private void onNextButtonClick(object sender, RoutedEventArgs e)
         {
-            
+            player.next = true;
         }
 
         private void onLoopButtonClick(object sender, RoutedEventArgs e)
@@ -141,6 +140,7 @@ namespace Projekt_1.Views
 
         private void volumeChangeDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
+            player.setVolume((float)volumeSlider.Value);
         }
 
         private void volumeChangeComplete(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -149,6 +149,16 @@ namespace Projekt_1.Views
 
         private void onVolumeButtonClick(object sender, RoutedEventArgs e)
         {
+            if (volumeSlider.Value != 0)
+            {
+                volumeSlider.Value = 0;
+                player.setVolume(0);
+            }
+            else
+            {
+                volumeSlider.Value = 0.5;
+                player.setVolume(0.5F);
+            }
         }
     }
 }

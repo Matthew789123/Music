@@ -508,7 +508,6 @@ public class PlaylistDisplay : ItemsDisplay
                 playlistToPlayer.Add(s);
                 ItemsContainer.Items.Add(s);
             }
-            MainView.player.setSongs(playlistToPlayer);
         }
     }
 
@@ -592,11 +591,10 @@ public class PlaylistDisplay : ItemsDisplay
         Button bt = (Button)sender;
         Songs s = (Songs)bt.DataContext;
 
-        List<Songs> songs = new List<Songs>();
-        songs.Add(s);
-        MainView.player.setSongs(songs);
-        
-        
+        MainView.player.setSongs(playlistToPlayer);
+        MainView.player.toPlay = s;
+
+
     }
 }
 

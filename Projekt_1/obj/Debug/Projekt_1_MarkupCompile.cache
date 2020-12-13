@@ -16,5 +16,5 @@ C:\Users\Mati_David\Documents\GitHub\Music\Projekt_1\App.xaml
 261249659126
 AddPlaylistDialog.xaml;ChoosePlaylist.xaml;Controls\AddPlaylist.xaml;Controls\AddToPlaylistButton.xaml;Controls\CustomTextBox.xaml;Controls\Favourites.xaml;Controls\LoopButton.xaml;Controls\NoVolumeButton.xaml;Controls\PauseButton.xaml;Controls\PlayButton.xaml;Controls\PlayNextButton.xaml;Controls\PlayPreviousButton.xaml;Controls\QueueButton.xaml;Controls\ShuffleButton.xaml;Controls\StarRating.xaml;Controls\VolumeHighButton.xaml;MainWindow.xaml;scrollbar.xaml;Templates.xaml;Views\Login.xaml;Views\MainView.xaml;Views\Registration.xaml;Views\ItemsDisplay.xaml;Views\SongDetails.xaml;
 
-True
+False
 

@@ -18,18 +18,23 @@ namespace Projekt_1
 
         private MainView view;
         private List<Songs> songs;
-        public Boolean isPaused = false, isSliding = false, reset = false;
-        public double time;
+        public Boolean isPaused = false, isSliding = false, reset = false, volumeChange = false, next = false, previous = false;
+        private double time;
+        public WaveOut waveOut = new WaveOut();
+        public Songs toPlay = null;
 
         public Player(MainView view)
         {
             this.view = view;
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            waveOut.Volume = 0.5F;
         }
 
         public void setSongs(List<Songs> songs)
         {
             this.songs = songs;
+            if (songs.Count == 1)
+                toPlay = songs[0];
             reset = true;
         }
 
@@ -42,13 +47,20 @@ namespace Projekt_1
             }
         }
 
+        public void setVolume(float volume)
+        {
+            waveOut.Volume = volume;
+        }
+
         public void play()
         {
             if (songs == null)
                 return;
 
-            foreach (Songs s in songs)
+            int i = songs.IndexOf(toPlay);
+            for (; i < songs.Count; i++)
             {
+                Songs s = songs[i];
                 using (Stream ms = new MemoryStream())
                 {
                     using (Stream stream = WebRequest.Create(s.Song)
@@ -68,43 +80,36 @@ namespace Projekt_1
                             WaveFormatConversionStream.CreatePcmStream(
                                 new Mp3FileReader(ms))))
                     {
-                        using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+                        waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());
+                        view.Dispatcher.Invoke(() =>
                         {
-                            view.Dispatcher.Invoke(() =>
+                            view.timeSlider.Maximum = blockAlignedStream.TotalTime.TotalSeconds;
+                            view.timeSlider.Value = 0;
+                            view.maxTime.Content = blockAlignedStream.TotalTime.ToString().Substring(3, 5);
+                        });
+                        waveOut.Init(blockAlignedStream);
+                        waveOut.Play();
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
+                        {
+                            while (isPaused)
                             {
-                                view.timeSlider.Maximum = blockAlignedStream.TotalTime.TotalSeconds;
-                                view.timeSlider.Value = 0;
-                                view.maxTime.Content = blockAlignedStream.TotalTime.ToString().Substring(3, 5);
-                            });
-                            waveOut.Init(blockAlignedStream);
-                            waveOut.Play();
-                            while (waveOut.PlaybackState == PlaybackState.Playing)
-                            {
-                                while (isPaused)
+                                if (waveOut.PlaybackState == PlaybackState.Playing)
+                                    waveOut.Pause();
+                                if (isSliding == true)
                                 {
-                                    if (waveOut.PlaybackState == PlaybackState.Playing)
-                                        waveOut.Pause();
-                                    if (isSliding == true)
+                                    view.Dispatcher.Invoke(() =>
                                     {
+                                        time = view.timeSlider.Value;
+                                        if (time > blockAlignedStream.TotalTime.TotalSeconds)
+                                            time = blockAlignedStream.TotalTime.TotalSeconds;
                                         blockAlignedStream.CurrentTime = TimeSpan.FromSeconds(time);
-                                        view.Dispatcher.Invoke(() =>
-                                        {
-                                            view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
-                                        });
-                                    }
-                                    if (reset == true)
-                                    {
-                                        reset = false;
-                                        return;
-                                    }
-                                    System.Threading.Thread.Sleep(100);
+                                        view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
+                                    });
                                 }
-                                if (waveOut.PlaybackState == PlaybackState.Paused)
-                                    waveOut.Play();
-                                view.Dispatcher.Invoke(() => {
-                                    view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
-                                    view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
-                                });
+                                if (next == true || previous == true)
+                                {
+                                    isPaused = false;
+                                }
                                 if (reset == true)
                                 {
                                     reset = false;
@@ -112,11 +117,37 @@ namespace Projekt_1
                                 }
                                 System.Threading.Thread.Sleep(100);
                             }
+                            if (next == true)
+                            {
+                                next = false;
+                                break;
+                            }
+                            if (previous == true)
+                            {
+                                previous = false;
+                                i -= 2;
+                                if (i < 0)
+                                    i = 0;
+                                break;
+                            }
+                            if (waveOut.PlaybackState == PlaybackState.Paused)
+                                waveOut.Play();
+                            view.Dispatcher.Invoke(() => {
+                                view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
+                                view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
+                            });
+                            if (reset == true)
+                            {
+                                reset = false;
+                                return;
+                            }
+                            System.Threading.Thread.Sleep(100);
                         }
                     }
                 }
             }
             isPaused = true;
+            toPlay = songs[0];
         }
 
     }

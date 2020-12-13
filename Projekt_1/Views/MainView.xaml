@@ -153,7 +153,7 @@
                     Template="{DynamicResource ToggleVolumeHighButton}"
                     Click="onVolumeButtonClick"/>
 
-                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" Width="100" Name="volumeSlider" Thumb.DragStarted="volumeChangeStart" Thumb.DragDelta="volumeChangeDelta" Thumb.DragCompleted="volumeChangeComplete" Maximum="1" ></Slider>
+                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" Width="100" Name="volumeSlider" Thumb.DragStarted="volumeChangeStart" Thumb.DragDelta="volumeChangeDelta" Thumb.DragCompleted="volumeChangeComplete" Value="0.5" Maximum="1" ></Slider>
 
             </StackPanel>
 
