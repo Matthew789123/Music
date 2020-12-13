@@ -174,7 +174,7 @@ namespace Projekt_1.Views
                     PasswordError.Visibility = Visibility.Collapsed;
                     PasswordBox.BorderBrush = (SolidColorBrush)converter.ConvertFrom("#FFABADB3");
                 }
-                if (PasswordBox.Password.Length < 8 && ConfirmBox.Password != PasswordBox.Password)
+                if (PasswordBox.Password.Length < 8 || ConfirmBox.Password != PasswordBox.Password)
                 {
                     dataIsCorrect = false;
                     if (ConfirmBox.Password.Length == 0)
