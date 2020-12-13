@@ -27,6 +27,7 @@ namespace Projekt_1.Views
         private Database db = Database.getInstanece();
         private Songs song;
         private Ratings ratingFromDb;
+        private Playlists currentPlaylist = null;
         public SongDetails(int song_id)
         {
             InitializeComponent();
@@ -115,14 +116,18 @@ namespace Projekt_1.Views
                             break;
                     }
                 }
-               
-                
             }
-   
         }
 
         private void OnBackButtonClick(object sender, RoutedEventArgs e)
         {
+            if (currentPlaylist != null)
+            {
+                MainWindow wnd = (MainWindow)Application.Current.MainWindow;
+                MainView view = (MainView)wnd.MainFrame.Content;
+                view.PlaylistListBox.SelectedItem = currentPlaylist;
+                return;
+            }
             NavigationService.GoBack();
         }
 
@@ -205,7 +210,14 @@ namespace Projekt_1.Views
 
         private void OnPlayButtonClick(object sender, RoutedEventArgs e)
         {
-            MainView.player.setSong(song); 
+            List<Songs> s = new List<Songs>();
+            s.Add(song);
+            MainView.player.setSongs(s); 
+        }
+
+        public void setCurrentPlaylist(Playlists p)
+        {
+            currentPlaylist = p;
         }
     }
 }

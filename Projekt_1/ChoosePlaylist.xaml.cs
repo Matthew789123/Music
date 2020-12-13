@@ -1,4 +1,5 @@
-﻿using Projekt_1.DAL;
+﻿using NHibernate;
+using Projekt_1.DAL;
 using Projekt_1.Models;
 using Projekt_1.NHibernate;
 using Projekt_1.Views;
@@ -25,6 +26,7 @@ namespace Projekt_1
     {
         private Database db = Database.getInstanece();
         private Songs s;
+        private ISession session = NHibernateHelper.OpenSession();
         public ChoosePlaylist(Songs s)
         {
             InitializeComponent();
@@ -32,9 +34,11 @@ namespace Projekt_1
 
             MainWindow window = (MainWindow)Application.Current.MainWindow;
             MainView view = (MainView)window.MainFrame.Content;
-            List<Playlists> selectedFields = view.PlaylistListBox.Items.OfType<Playlists>().ToList();
+            
+            List<Playlists> selectedFields = Database.getInstanece().GetPlaylists(session);
 
-           foreach(Playlists p in selectedFields)
+
+            foreach (Playlists p in selectedFields)
             {
                 PlaylistsCombo.Items.Add(p);
             }
@@ -45,18 +49,21 @@ namespace Projekt_1
 
         private void oncloseClick(object sender, RoutedEventArgs e)
         {
+            session.Close();
             Close();
         }
 
         private void onAddClick(object sender, RoutedEventArgs e)
         {
 
-            
-            using(var session=NHibernateHelper.OpenSession())
+            db.AddSongToPlaylist(s, (Playlists)PlaylistsCombo.SelectedItem, session);
+            if(MainView.player.currentPlaylist!=null)
             {
-
-                db.AddSongToPlaylist(s, (Playlists)PlaylistsCombo.SelectedItem, session);
+                if (MainView.player.currentPlaylist.Id == ((Playlists)PlaylistsCombo.SelectedItem).Id && !MainView.player.getSongs().Contains(s))
+                    MainView.player.getSongs().Insert(((Playlists)PlaylistsCombo.SelectedItem).songs.IndexOf(s), s);
             }
+                
+            session.Close();
             Close();
         }
     }

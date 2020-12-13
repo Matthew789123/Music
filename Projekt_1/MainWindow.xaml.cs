@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,15 +23,13 @@ namespace Projekt_1
     /// </summary>
     public partial class MainWindow : Window
     {
-        Thread thread;
         public MainWindow()
         {
             InitializeComponent();
             Login login = new Login();
             MainFrame.NavigationService.Navigate(login);
-            
+
         }
 
-     
     }
 }

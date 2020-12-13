@@ -311,7 +311,6 @@ public class AlbumsDisplay : ItemsDisplay
         using(var session = NHibernateHelper.OpenSession())
         {
             songsFromAlbum.setViewContent((IList<Songs>)db.GetSongsFormAlbum(a,session));
-            
         }
     }
 
@@ -435,7 +434,9 @@ public class SongsDisplay : ItemsDisplay
         MainView view = (MainView)window.MainFrame.Content;
         Button bt = (Button)sender;
         Songs s = (Songs)bt.DataContext;
-        MainView.player.setSong(s);
+        List<Songs> songs = new List<Songs>();
+        songs.Add(s);
+        MainView.player.setSongs(songs);
     }
 
 }
@@ -506,11 +507,6 @@ public class PlaylistDisplay : ItemsDisplay
                 playlistToPlayer.Add(s);
                 ItemsContainer.Items.Add(s);
             }
-            if(MainView.player.getPlayingFlag()==true)
-            {
-                MainView.player.setPlayingFlag();
-            }
-            MainView.player.setPlaylist(playlistToPlayer);
         }
     }
 
@@ -539,6 +535,7 @@ public class PlaylistDisplay : ItemsDisplay
         Songs s = (Songs)ItemsContainer.SelectedItem;
         SongDetails detail = new SongDetails(s.Id);
         MainView view = (MainView)window.MainFrame.Content;
+        detail.setCurrentPlaylist((Playlists)view.PlaylistListBox.SelectedItem);
         view.ActivityFrame.Navigate(detail);
         
     }
@@ -584,6 +581,13 @@ public class PlaylistDisplay : ItemsDisplay
             db.RemoveSongFromPlaylist(s,playlist, session);
         }
         ItemsContainer.Items.Remove(s);
+
+        if(MainView.player.currentPlaylist!=null)
+        {
+            if (MainView.player.currentPlaylist.Id == playlist.Id)
+                MainView.player.getSongs().RemoveAll(x => x.Id == s.Id);
+        }
+        
     }
 
     protected override void onPlayButtonClick(object sender, RoutedEventArgs e)
@@ -594,11 +598,10 @@ public class PlaylistDisplay : ItemsDisplay
         Button bt = (Button)sender;
         Songs s = (Songs)bt.DataContext;
 
-        MainView.player.setPlayingFlag();
-        MainView.player.setCurrentSong(s);
-        MainView.player.setSong(s);
-        
-        
+        MainView.player.setSongs(playlistToPlayer);
+        MainView.player.toPlay = s;
+        MainView.player.currentPlaylist = playlist;
+
     }
 }
 
@@ -669,6 +672,7 @@ public class HomeDisplay:ItemsDisplay
     protected override void OnLogoutButtonClick(object sender, RoutedEventArgs e)
     {
         MainWindow wnd = (MainWindow)Application.Current.MainWindow;
+        ((MainView)wnd.MainFrame.Content).abortThread();
         wnd.MainFrame.Content = "";
         Login login = new Login();
         wnd.MainFrame.Navigate(login);

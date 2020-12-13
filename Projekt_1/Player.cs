@@ -9,157 +9,64 @@ using System.Threading;
 using System.Threading.Tasks;
 using Projekt_1.Views;
 using Projekt_1.Models;
+using System.Windows.Controls;
 
 namespace Projekt_1
 {
     public class Player
     {
-        private WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());
+
         private MainView view;
-        private bool isPlaying = false;
-        private bool isPaused = false;
-        private bool isLooped = false;
-        private bool nextSong = false;
-        private bool previousSong = false;
-        private bool shuffle = false;
-        private int counter = 0;
+        private List<Songs> songs;
+        public Boolean isPaused = false, isSliding = false, reset = false, volumeChange = false, next = false, previous = false, loop = false, shuffle = false;
         private double sliderTime;
         private TimeSpan time;
-        private bool slide = false;
-        private int currnetSong=0;
-        private List<Songs> songs=new List<Songs>();
-        private Songs song = null;
-        private Random random = new Random();
-        int i = 0;
+        public WaveOut waveOut = new WaveOut();
+        public Songs toPlay = null;
+        public Playlists currentPlaylist = null;
 
         public Player(MainView view)
         {
             this.view = view;
-            
-        }
-
-        public void setShuffleFlag()
-        {
-            shuffle = !shuffle;
-        }
-
-        public bool getShuffleFlag()
-        {
-            return shuffle;
-        }
-
-        public bool getLoopFlag()
-        {
-            return isLooped;
-        }
-
-        public void setSong(Songs song)
-        {
-            if(isPlaying==true)
-            {
-                waveOut.Stop();
-                isPlaying = false;
-            }
-            this.song = song;
-        }
-
-
-        public float getVolume()
-        {
-            return (float)waveOut.Volume;
-        }
-
-        public void setPlaylist(List<Songs> songs)
-        {
-            this.songs = songs;
-        }
-
-
-        public void setPlayingFlag()
-        {
-            isPlaying = !isPlaying;
-        }
-
-        public void setSliderFlag()
-        {
-            slide = !slide;
-        }
-
-        public void setPauseFlag()
-        {
-            isPaused = !isPaused;
-        }
-        public void setSliderTime( double value)
-        {
-            sliderTime = value;
-        }
-
-        public void setLoopFlag()
-        {
-            isLooped = !isLooped;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            waveOut.Volume = 0.5F;
         }
 
         public TimeSpan getSliderTime()
         {
             return TimeSpan.FromSeconds(sliderTime);
         }
-        public void  setTime(TimeSpan span)
+
+        public List<Songs> getSongs()
+        {
+            return songs;
+        }
+
+        public void setTime(TimeSpan span)
         {
             time = span;
         }
 
-
-        public void emptyPlaylist()
+        public void setSliderTime(double value)
         {
-            songs.Clear();
+            sliderTime = value;
         }
+
         public string sliderTimeValueToString()
         {
-            return Convert.ToString(TimeSpan.FromSeconds(sliderTime)).Substring(3);
+            return time.ToString().Substring(3, 5);
         }
 
-        public bool getPlayingFlag()
+        public void setSongs(List<Songs> songs)
         {
-            return isPlaying;
+            this.songs = songs;
+            if (songs.Count == 1)
+                toPlay = songs[0];
+            reset = true;
         }
-
-
-        public void setNextSongFlag()
-        {
-           
-            nextSong = !nextSong;
-        }
-
-        public void setPreviousSongFlag()
-        {
-            previousSong = !previousSong;
-        }
-
-
-        public void setCurrentSong(Songs s)
-        {
-            if (songs.Contains(s))
-            {
-                currnetSong = songs.IndexOf(s);
-                song = s;
-            }   
-        }
-
-
-        public void setVolume(float value)
-        {
-            waveOut.Volume = value;
-        }
-
 
         public void threadPlay()
         {
-            waveOut.Volume = 0.50f;
-            view.Dispatcher.Invoke(() =>
-            {
-                view.volumeSlider.Value = waveOut.Volume;
-
-            });
             while (true)
             {
                 play();
@@ -167,154 +74,141 @@ namespace Projekt_1
             }
         }
 
-        private void initialize(Stream ms)
+        public void setVolume(float volume)
         {
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            
-            using (Stream stream = WebRequest.Create(song.Song)
-                       .GetResponse().GetResponseStream())
-            {
-                
-                byte[] buffer = new byte[32768];
-                int read;
-                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-            }
+            waveOut.Volume = volume;
         }
-
 
         public void play()
         {
-            if (song!=null)
+            if (songs == null)
+                return;
+            if(!isPaused)
             {
+                view.Dispatcher.Invoke(() => {
+                    view.Play.Template = this.view.FindResource("TogglePauseButton") as ControlTemplate;
+                });
+            }
+            else
+            {
+                view.Dispatcher.Invoke(() => {
+                    view.Play.Template = this.view.FindResource("TogglePlayButton") as ControlTemplate;
+                });
+            }
+            
+            int i = songs.IndexOf(toPlay);
+            for (; i < songs.Count; i++)
+            {
+                Songs s = songs[i];
+                view.Dispatcher.Invoke(() => view.currentlyPlayingLabel.Content = s.Title);
+
                 using (Stream ms = new MemoryStream())
                 {
-                    if (nextSong)
+                    using (Stream stream = WebRequest.Create(s.Song)
+                        .GetResponse().GetResponseStream())
                     {
-                        if (songs != null && songs.Count != 0)
+                        byte[] buffer = new byte[32768];
+                        int read;
+                        while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
                         {
-                            currnetSong = (currnetSong + 1) % songs.Count;
-                            nextSong = false;
-                            waveOut.Stop();
-                            song = songs[currnetSong];
-
-
+                            ms.Write(buffer, 0, read);
                         }
                     }
 
-                    if (previousSong)
-                    {
-                        if (songs != null && songs.Count != 0)
-                        {
-                            currnetSong = currnetSong - 1;
-                            if (currnetSong < 0)
-                                currnetSong = songs.Count - 1;
-                            previousSong = false;
-                            waveOut.Stop();
-                            song = songs[currnetSong];
-
-                        }
-
-                    }
-
-
-                    initialize(ms);
-
-                    long c = ms.Length;
                     ms.Position = 0;
-
-
                     using (WaveStream blockAlignedStream =
-                       new BlockAlignReductionStream(
-                           WaveFormatConversionStream.CreatePcmStream(
-                               new Mp3FileReader(ms))))
+                        new BlockAlignReductionStream(
+                            WaveFormatConversionStream.CreatePcmStream(
+                                new Mp3FileReader(ms))))
                     {
+                        waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback());
                         view.Dispatcher.Invoke(() =>
                         {
-                            view.currentlyPlayingLabel.Content = song.Title;
-                           
+                            view.timeSlider.Maximum = blockAlignedStream.TotalTime.TotalSeconds;
+                            view.timeSlider.Value = 0;
+                            view.maxTime.Content = blockAlignedStream.TotalTime.ToString().Substring(3, 5);
                         });
-
-                        if (!isPlaying)
+                        waveOut.Init(blockAlignedStream);
+                        waveOut.Play();
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
                         {
-                            
-                            isPlaying = true;
-                            view.Dispatcher.Invoke(() =>
-                                {
-                                    view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
-                                    view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
-
-                                });
-                            view.Dispatcher.Invoke(() =>
+                            while (isPaused)
                             {
-                                view.maxTime.Content = blockAlignedStream.TotalTime.ToString().Substring(3, 5);
-                                view.timeSlider.Value = 0;
-                                view.timeSlider.Maximum = blockAlignedStream.TotalTime.TotalSeconds;
-
-                            });
-                            waveOut.Init(blockAlignedStream);
-                            waveOut.Play();
-
-                        }
-
-                        
-
-                        while (waveOut.PlaybackState == PlaybackState.Playing || waveOut.PlaybackState == PlaybackState.Paused)
-                        {
-                            if (slide)
-                            {
-
-                                view.Dispatcher.Invoke(() =>
+                                if (waveOut.PlaybackState == PlaybackState.Playing)
+                                    waveOut.Pause();
+                                if (isSliding == true)
                                 {
-                                    blockAlignedStream.CurrentTime = time;
-                                });
+                                    TimeSpan ts = new TimeSpan(0, 0, 0, 0, time.Milliseconds);
+                                    time = time.Subtract(ts);
 
-                            }
-
-                            if (isLooped)
-                            {
-                                if (ms.Position >= ms.Length)
-                                {
-                                    ms.Position = 0;
-                                    blockAlignedStream.CurrentTime = TimeSpan.Zero;
+                                    view.Dispatcher.Invoke(() =>
+                                    {
+                                        blockAlignedStream.CurrentTime = time;
+                                    });
                                 }
-                            }
-                            if(!isLooped && songs.Count>1 && ms.Position >= ms.Length)
-                            {
-                                counter = (counter + 1) % songs.Count;
-                                isPlaying = false;
-                                setNextSongFlag();
-                                break;
-                            }
-
-                            if((nextSong || previousSong) && isPlaying)
-                            {
-                                isPlaying = false;
-                                break;
-                            }
-
-                            if (!isPaused)
-                            {
-                                if(waveOut.PlaybackState!=PlaybackState.Stopped)
-                                    waveOut.Play();
-                                view.Dispatcher.Invoke(() =>
+                                if (next == true || previous == true)
                                 {
-                                    view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
-                                    view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
-
-                                });
-
+                                    isPaused = false;
+                                }
+                                if (reset == true)
+                                {
+                                    reset = false;
+                                    return;
+                                }
+                                System.Threading.Thread.Sleep(100);
                             }
-                            else
-                                waveOut.Pause();
-
-                            Thread.Sleep(100);
+                            if (next == true)
+                            {
+                                next = false;
+                                if (waveOut.PlaybackState == PlaybackState.Paused)
+                                    isPaused = true;
+                                else
+                                    isPaused = false;
+                                break;
+                            }
+                            if (previous == true)
+                            {
+                                previous = false;
+                                i -= 2;
+                                if (i < -1)
+                                    i = -1;
+                                if (waveOut.PlaybackState == PlaybackState.Paused)
+                                    isPaused = true;
+                                else
+                                    isPaused = false;
+                                break;
+                            }
+                            if (waveOut.PlaybackState == PlaybackState.Paused)
+                                waveOut.Play();
+                            view.Dispatcher.Invoke(() => {
+                                view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
+                                view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
+                            });
+                            if (loop == true && blockAlignedStream.CurrentTime.TotalSeconds == blockAlignedStream.TotalTime.TotalSeconds)
+                                blockAlignedStream.CurrentTime = TimeSpan.Zero;
+                            if (reset == true)
+                            {
+                                reset = false;
+                                return;
+                            }
+                            System.Threading.Thread.Sleep(100);
                         }
                     }
                 }
+                if (shuffle == true && songs.Count != 1)
+                {
+                    int j = i - 1;
+                    Random rnd = new Random();
+                    do
+                    {
+                        i = rnd.Next(-1, songs.Count - 2);
+                    } while (i == j);
+                }
             }
+            isPaused = true;
+
+            toPlay = songs[0];
         }
+
     }
 }

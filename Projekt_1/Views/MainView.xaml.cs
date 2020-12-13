@@ -97,8 +97,8 @@ namespace Projekt_1.Views
 
         private void timeSkipStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
-            player.setSliderFlag();
-            player.setPauseFlag();
+            player.isSliding = true;
+            player.isPaused = true;
         }
 
         private void timeSkipDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
@@ -106,68 +106,114 @@ namespace Projekt_1.Views
             player.setSliderTime(timeSlider.Value);
             currentTime.Content = player.sliderTimeValueToString();
             player.setTime(player.getSliderTime());
+
+
+
         }
 
         private void timeSkipEnded(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            player.setSliderFlag();
-            player.setPauseFlag();
+            player.isSliding = false;
+            player.isPaused = false;
         }
 
         private void onPlayButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setPauseFlag();
+            player.isPaused = !player.isPaused;
+            if(player.isPaused==false)
+            {
+                Play.Template = FindResource("TogglePauseButton") as ControlTemplate;
+            }
+            else
+                Play.Template = FindResource("TogglePlayButton") as ControlTemplate;
         }
 
         private void onPreviousButtonClick(object sender, RoutedEventArgs e)
         {
-
-            player.setPreviousSongFlag();
+            player.previous = true;
         }
 
         private void onShuffleButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setShuffleFlag();
+            player.shuffle = !player.shuffle;
+            
+            if (player.shuffle)
+            {
+                player.loop = false;
+                Shuffle.Template = FindResource("ToggleShuffleHighLightButton") as ControlTemplate;
+                Loop.Template = FindResource("ToggleLoopButton") as ControlTemplate;
+            }
+            else
+                Shuffle.Template = FindResource("ToggleShuffleButton") as ControlTemplate;
         }
 
         private void onNextButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setNextSongFlag();
-            
+            player.next = true;
         }
 
         private void onLoopButtonClick(object sender, RoutedEventArgs e)
         {
-            player.setLoopFlag();
+            player.loop = !player.loop;
+           
+            if(player.loop)
+            {
+                player.shuffle = false;
+                Loop.Template = FindResource("ToggleLoopHighLightButton") as ControlTemplate;
+                Shuffle.Template = FindResource("ToggleShuffleButton") as ControlTemplate;
+            }
+            else
+                Loop.Template = FindResource("ToggleLoopButton") as ControlTemplate;
         }
 
         private void volumeChangeStart(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
-            player.setVolume((float)volumeSlider.Value);
         }
 
         private void volumeChangeDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
             player.setVolume((float)volumeSlider.Value);
-        }
-
-        private void volumeChangeComplete(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-        {
-            player.setVolume((float)volumeSlider.Value);
+            if(volumeSlider.Value==0f)
+            {
+                Volume.Template = FindResource("ToggleNoVolumeButton") as ControlTemplate;
+            }
+            else
+                Volume.Template = FindResource("ToggleVolumeHighButton") as ControlTemplate;
         }
 
         private void onVolumeButtonClick(object sender, RoutedEventArgs e)
         {
-            if(player.getVolume()==0f)
+            if (volumeSlider.Value != 0)
             {
-                player.setVolume(1f);
-                volumeSlider.Value = 1;
+                volumeSlider.Value = 0;
+                player.setVolume(0);
+                Volume.Template = FindResource("ToggleNoVolumeButton") as ControlTemplate;
             }
             else
             {
-                player.setVolume(0f);
-                volumeSlider.Value = 0;
+                volumeSlider.Value = 0.5;
+                player.setVolume(0.5F);
+                Volume.Template = FindResource("ToggleVolumeHighButton") as ControlTemplate;
             }
+        }
+
+        private void OnCurrentPlaylistClick(object sender, RoutedEventArgs e)
+        {
+            if (player.currentPlaylist == null)
+                return;
+            foreach (Playlists p in PlaylistListBox.Items)
+            {
+                if (p == player.currentPlaylist)
+                {
+                    PlaylistListBox.SelectedItem = p;
+                    return;
+                }
+            }
+        }
+
+        public void abortThread()
+        {
+            thread.Abort();
         }
     }
 }

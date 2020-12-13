@@ -130,9 +130,9 @@
                         Click="onLoopButtonClick"/>
 
                 </StackPanel>
-                <Label Name="currentTime" Style="{StaticResource LabelStyle}" Grid.Row="1" VerticalAlignment="Center">0.00</Label>
+                <Label Name="currentTime" Style="{StaticResource LabelStyle}" Grid.Row="1" VerticalAlignment="Center">00.00</Label>
                 <Slider Name="timeSlider" IsSnapToTickEnabled="True" TickFrequency="1" Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center"  Grid.Row="1" Margin="35 0" Thumb.DragStarted="timeSkipStarted" Thumb.DragDelta="timeSkipDelta" Thumb.DragCompleted="timeSkipEnded"></Slider>
-                <Label Name="maxTime" Style="{StaticResource LabelStyle}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">1,11</Label>
+                <Label Name="maxTime" Style="{StaticResource LabelStyle}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">00.00</Label>
             </Grid>
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="10">
                 <Button
@@ -142,18 +142,20 @@
                     Height="15"
                     Content="All"
                     Padding="2"
-                    Template="{DynamicResource ToggleQueueButton}"/>
+                    Template="{DynamicResource ToggleQueueButton}"
+                    Click="OnCurrentPlaylistClick"/>
 
                 <Button
                     Margin="5"
                     Width="15"
                     Height="15"
+                    Name="Volume"
                     Content="All"
                     Padding="2"
                     Template="{DynamicResource ToggleVolumeHighButton}"
                     Click="onVolumeButtonClick"/>
 
-                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" Width="100" Name="volumeSlider" Thumb.DragStarted="volumeChangeStart" Thumb.DragDelta="volumeChangeDelta" Thumb.DragCompleted="volumeChangeComplete" Maximum="1" ></Slider>
+                <Slider Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" Width="100" Name="volumeSlider" Thumb.DragDelta="volumeChangeDelta" Value="0.5" Maximum="1" ></Slider>
 
             </StackPanel>
 
