@@ -18,7 +18,7 @@ namespace Projekt_1
 
         private MainView view;
         private List<Songs> songs;
-        public Boolean isPaused = false, isSliding = false, reset = false, volumeChange = false, next = false, previous = false;
+        public Boolean isPaused = false, isSliding = false, reset = false, volumeChange = false, next = false, previous = false, loop = false, shuffle = false;
         private double time;
         public WaveOut waveOut = new WaveOut();
         public Songs toPlay = null;
@@ -61,6 +61,7 @@ namespace Projekt_1
             for (; i < songs.Count; i++)
             {
                 Songs s = songs[i];
+                view.Dispatcher.Invoke(() => view.currentlyPlayingLabel.Content = s.Title);
                 using (Stream ms = new MemoryStream())
                 {
                     using (Stream stream = WebRequest.Create(s.Song)
@@ -126,8 +127,8 @@ namespace Projekt_1
                             {
                                 previous = false;
                                 i -= 2;
-                                if (i < 0)
-                                    i = 0;
+                                if (i < -1)
+                                    i = -1;
                                 break;
                             }
                             if (waveOut.PlaybackState == PlaybackState.Paused)
@@ -136,6 +137,8 @@ namespace Projekt_1
                                 view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
                                 view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
                             });
+                            if (loop == true && blockAlignedStream.CurrentTime.TotalSeconds == blockAlignedStream.TotalTime.TotalSeconds)
+                                blockAlignedStream.CurrentTime = TimeSpan.Zero;
                             if (reset == true)
                             {
                                 reset = false;
@@ -144,6 +147,13 @@ namespace Projekt_1
                             System.Threading.Thread.Sleep(100);
                         }
                     }
+                }
+                if (shuffle == true && songs.Count != 1)
+                {
+                    int j = i;
+                    Random rnd = new Random();
+                    while (i == j)
+                        i = rnd.Next(-1, songs.Count - 2);
                 }
             }
             isPaused = true;

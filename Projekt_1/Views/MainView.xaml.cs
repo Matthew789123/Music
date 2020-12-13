@@ -123,6 +123,7 @@ namespace Projekt_1.Views
 
         private void onShuffleButtonClick(object sender, RoutedEventArgs e)
         {
+            player.shuffle = !player.shuffle;
         }
 
         private void onNextButtonClick(object sender, RoutedEventArgs e)
@@ -132,6 +133,7 @@ namespace Projekt_1.Views
 
         private void onLoopButtonClick(object sender, RoutedEventArgs e)
         {
+            player.loop = !player.loop;
         }
 
         private void volumeChangeStart(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
