@@ -16,7 +16,7 @@ namespace Projekt_1.Mapping
             Map(x => x.Title, "TITLE");
             Map(x => x.Release_date, "RELEASE_DATE");
             HasManyToMany(x => x.artists).Inverse().Table("ARTISTS_ALBUMS").ParentKeyColumn("ALBUMS_ID").ChildKeyColumn("ARTISTS_ID").LazyLoad().Cascade.All();
-            HasMany(x => x.songs).Inverse().KeyColumn("ID");
+            HasMany(x => x.songs).Inverse().KeyColumn("ALBUMS_ID");
             Table("ALBUMS");
         }
     }

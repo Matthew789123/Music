@@ -311,7 +311,6 @@ public class AlbumsDisplay : ItemsDisplay
         using(var session = NHibernateHelper.OpenSession())
         {
             songsFromAlbum.setViewContent((IList<Songs>)db.GetSongsFormAlbum(a,session));
-            
         }
     }
 
@@ -583,8 +582,12 @@ public class PlaylistDisplay : ItemsDisplay
         }
         ItemsContainer.Items.Remove(s);
 
-        if (MainView.player.currentPlaylist == playlist)
-            MainView.player.getSongs().Remove(s);
+        if(MainView.player.currentPlaylist!=null)
+        {
+            if (MainView.player.currentPlaylist.Id == playlist.Id)
+                MainView.player.getSongs().RemoveAll(x => x.Id == s.Id);
+        }
+        
     }
 
     protected override void onPlayButtonClick(object sender, RoutedEventArgs e)

@@ -49,15 +49,21 @@ namespace Projekt_1
 
         private void oncloseClick(object sender, RoutedEventArgs e)
         {
+            session.Close();
             Close();
         }
 
         private void onAddClick(object sender, RoutedEventArgs e)
         {
 
-                db.AddSongToPlaylist(s, (Playlists)PlaylistsCombo.SelectedItem, session);
-                if (MainView.player.currentPlaylist == (Playlists)PlaylistsCombo.SelectedItem && !MainView.player.getSongs().Contains(s))
+            db.AddSongToPlaylist(s, (Playlists)PlaylistsCombo.SelectedItem, session);
+            if(MainView.player.currentPlaylist!=null)
+            {
+                if (MainView.player.currentPlaylist.Id == ((Playlists)PlaylistsCombo.SelectedItem).Id && !MainView.player.getSongs().Contains(s))
                     MainView.player.getSongs().Insert(((Playlists)PlaylistsCombo.SelectedItem).songs.IndexOf(s), s);
+            }
+                
+            session.Close();
             Close();
         }
     }

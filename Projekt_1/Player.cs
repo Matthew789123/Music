@@ -54,7 +54,7 @@ namespace Projekt_1
 
         public string sliderTimeValueToString()
         {
-            return Convert.ToString(TimeSpan.FromSeconds(sliderTime)).Substring(3);
+            return time.ToString().Substring(3, 5);
         }
 
         public void setSongs(List<Songs> songs)
@@ -138,6 +138,9 @@ namespace Projekt_1
                                     waveOut.Pause();
                                 if (isSliding == true)
                                 {
+                                    TimeSpan ts = new TimeSpan(0, 0, 0, 0, time.Milliseconds);
+                                    time = time.Subtract(ts);
+
                                     view.Dispatcher.Invoke(() =>
                                     {
                                         blockAlignedStream.CurrentTime = time;
@@ -199,7 +202,7 @@ namespace Projekt_1
                     do
                     {
                         i = rnd.Next(-1, songs.Count - 2);
-                    } while (i - 1 == j);
+                    } while (i == j);
                 }
             }
             isPaused = true;
