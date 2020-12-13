@@ -142,7 +142,8 @@
                     Height="15"
                     Content="All"
                     Padding="2"
-                    Template="{DynamicResource ToggleQueueButton}"/>
+                    Template="{DynamicResource ToggleQueueButton}"
+                    Click="OnCurrentPlaylistClick"/>
 
                 <Button
                     Margin="5"

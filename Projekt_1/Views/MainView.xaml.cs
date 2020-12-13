@@ -192,5 +192,19 @@ namespace Projekt_1.Views
                 Volume.Template = FindResource("ToggleVolumeHighButton") as ControlTemplate;
             }
         }
+
+        private void OnCurrentPlaylistClick(object sender, RoutedEventArgs e)
+        {
+            if (player.currentPlaylist == null)
+                return;
+            foreach (Playlists p in PlaylistListBox.Items)
+            {
+                if (p == player.currentPlaylist)
+                {
+                    PlaylistListBox.SelectedItem = p;
+                    return;
+                }
+            }
+        }
     }
 }
