@@ -49,7 +49,7 @@ namespace Projekt_1
 
         public string sliderTimeValueToString()
         {
-            return Convert.ToString(TimeSpan.FromSeconds(sliderTime)).Substring(3);
+            return time.ToString().Substring(3, 5);
         }
 
         public void setSongs(List<Songs> songs)
@@ -135,7 +135,9 @@ namespace Projekt_1
                                 {
                                     view.Dispatcher.Invoke(() =>
                                     {
-                                            blockAlignedStream.CurrentTime = time;
+                                        TimeSpan ts = new TimeSpan(0, 0, 0, 0, time.Milliseconds);
+                                        blockAlignedStream.CurrentTime = time.Subtract(ts);
+
                                     });
                                 }
                                 if (next == true || previous == true)
@@ -172,6 +174,7 @@ namespace Projekt_1
                             }
                             if (waveOut.PlaybackState == PlaybackState.Paused)
                                 waveOut.Play();
+
                             view.Dispatcher.Invoke(() => {
                                 view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
                                 view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
@@ -189,10 +192,12 @@ namespace Projekt_1
                 }
                 if (shuffle == true && songs.Count != 1)
                 {
-                    int j = i;
+                    int j = i-1;
                     Random rnd = new Random();
-                    while (i == j-1)
+                    do
+                    {
                         i = rnd.Next(-1, songs.Count - 2);
+                    } while (i-1 == j);
                 }
             }
             isPaused = true;
