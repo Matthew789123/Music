@@ -138,11 +138,10 @@ namespace Projekt_1
                                     waveOut.Pause();
                                 if (isSliding == true)
                                 {
-                                    TimeSpan ts = new TimeSpan(0, 0, 0, 0, time.Milliseconds);
-                                    time = time.Subtract(ts);
-
                                     view.Dispatcher.Invoke(() =>
                                     {
+                                        TimeSpan ts = new TimeSpan(0, 0, 0, 0, time.Milliseconds);
+                                        time = time.Subtract(ts);
                                         blockAlignedStream.CurrentTime = time;
                                     });
                                 }
