@@ -37,6 +37,11 @@ namespace Projekt_1
             return TimeSpan.FromSeconds(sliderTime);
         }
 
+        public List<Songs> getSongs()
+        {
+            return songs;
+        }
+
         public void setTime(TimeSpan span)
         {
             time = span;
@@ -49,7 +54,7 @@ namespace Projekt_1
 
         public string sliderTimeValueToString()
         {
-            return time.ToString().Substring(3, 5);
+            return Convert.ToString(TimeSpan.FromSeconds(sliderTime)).Substring(3);
         }
 
         public void setSongs(List<Songs> songs)
@@ -125,7 +130,7 @@ namespace Projekt_1
                         });
                         waveOut.Init(blockAlignedStream);
                         waveOut.Play();
-                        while (waveOut.PlaybackState == PlaybackState.Playing) 
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
                         {
                             while (isPaused)
                             {
@@ -135,9 +140,7 @@ namespace Projekt_1
                                 {
                                     view.Dispatcher.Invoke(() =>
                                     {
-                                        TimeSpan ts = new TimeSpan(0, 0, 0, 0, time.Milliseconds);
-                                        blockAlignedStream.CurrentTime = time.Subtract(ts);
-
+                                        blockAlignedStream.CurrentTime = time;
                                     });
                                 }
                                 if (next == true || previous == true)
@@ -174,7 +177,6 @@ namespace Projekt_1
                             }
                             if (waveOut.PlaybackState == PlaybackState.Paused)
                                 waveOut.Play();
-
                             view.Dispatcher.Invoke(() => {
                                 view.timeSlider.Value = blockAlignedStream.CurrentTime.TotalSeconds;
                                 view.currentTime.Content = blockAlignedStream.CurrentTime.ToString().Substring(3, 5);
@@ -192,18 +194,16 @@ namespace Projekt_1
                 }
                 if (shuffle == true && songs.Count != 1)
                 {
-                    int j = i-1;
+                    int j = i - 1;
                     Random rnd = new Random();
                     do
                     {
                         i = rnd.Next(-1, songs.Count - 2);
-                    } while (i-1 == j);
+                    } while (i - 1 == j);
                 }
             }
             isPaused = true;
-            view.Dispatcher.Invoke(() => {
-                view.currentTime.Content = "00.00";
-            });
+
             toPlay = songs[0];
         }
 

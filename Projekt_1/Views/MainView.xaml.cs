@@ -210,5 +210,10 @@ namespace Projekt_1.Views
                 }
             }
         }
+
+        public void abortThread()
+        {
+            thread.Abort();
+        }
     }
 }

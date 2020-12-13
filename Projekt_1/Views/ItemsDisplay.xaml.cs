@@ -582,6 +582,9 @@ public class PlaylistDisplay : ItemsDisplay
             db.RemoveSongFromPlaylist(s,playlist, session);
         }
         ItemsContainer.Items.Remove(s);
+
+        if (MainView.player.currentPlaylist == playlist)
+            MainView.player.getSongs().Remove(s);
     }
 
     protected override void onPlayButtonClick(object sender, RoutedEventArgs e)
@@ -595,7 +598,6 @@ public class PlaylistDisplay : ItemsDisplay
         MainView.player.setSongs(playlistToPlayer);
         MainView.player.toPlay = s;
         MainView.player.currentPlaylist = playlist;
-
 
     }
 }
@@ -667,6 +669,7 @@ public class HomeDisplay:ItemsDisplay
     protected override void OnLogoutButtonClick(object sender, RoutedEventArgs e)
     {
         MainWindow wnd = (MainWindow)Application.Current.MainWindow;
+        ((MainView)wnd.MainFrame.Content).abortThread();
         wnd.MainFrame.Content = "";
         Login login = new Login();
         wnd.MainFrame.Navigate(login);
