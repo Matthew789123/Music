@@ -536,6 +536,7 @@ public class PlaylistDisplay : ItemsDisplay
         Songs s = (Songs)ItemsContainer.SelectedItem;
         SongDetails detail = new SongDetails(s.Id);
         MainView view = (MainView)window.MainFrame.Content;
+        detail.setCurrentPlaylist((Playlists)view.PlaylistListBox.SelectedItem);
         view.ActivityFrame.Navigate(detail);
         
     }
